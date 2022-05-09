@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SARCASPD</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_text">Formulário Avaliativo de Poços</string>
+    <string name="year_built_question">Qual ano da construção?</string>
+    <string name="year_built_hint">Selecione o ano da construção</string>
 </resources>
