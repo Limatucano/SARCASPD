@@ -2,12 +2,13 @@ package com.br.faeterj.paracambi.sarcaspd.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.br.faeterj.paracambi.sarcaspd.domain.FirstBlock
 
-class FormViewModelFactory : ViewModelProvider.Factory{
+class FormViewModelFactory(val firstBlock : FirstBlock) : ViewModelProvider.Factory{
 
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
         return if (modelClass.isAssignableFrom(FormViewModel::class.java)){
-            FormViewModel() as T
+            FormViewModel(firstBlock) as T
         }else{
             throw IllegalArgumentException("ViewModel Not Found")
         }

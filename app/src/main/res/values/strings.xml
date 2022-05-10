@@ -4,4 +4,10 @@
     <string name="title_text">Formulário Avaliativo de Poços</string>
     <string name="year_built_question">Qual ano da construção?</string>
     <string name="year_built_hint">Selecione o ano da construção</string>
+    <string name="artesian_well_type_question">Qual o tipo de poço?</string>
+    <string name="artesian_well_type_hint">Selecione o tipo de poço</string>
+
+    <string name="cacimba">Cacimba</string>
+    <string name="escavado">Escavado</string>
+    <string name="perfurado">Perfurado</string>
 </resources>
