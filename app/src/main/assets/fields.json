@@ -1,0 +1,26 @@
+{
+  "blocks":
+  [
+    {
+      "name": "fieldA",
+      "type": "STRING",
+      "min": 10,
+      "max": 100,
+      "defaultValue": null
+    },
+    {
+      "name": "fieldB",
+      "type": "INTEGER",
+      "min": 10,
+      "max": 100,
+      "defaultValue": null
+    },
+    {
+      "name": "fieldC",
+      "type": "BOOLEAN_CHECKBOX",
+      "min": null,
+      "max": null,
+      "defaultValue": true
+    }
+  ]
+}

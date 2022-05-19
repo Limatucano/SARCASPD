@@ -1,19 +1,21 @@
 package com.br.faeterj.paracambi.sarcaspd.view
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.br.faeterj.paracambi.sarcaspd.R
+import com.br.faeterj.paracambi.sarcaspd.data.model.Form
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
+import com.br.faeterj.paracambi.sarcaspd.domain.FirstBlock
+import com.br.faeterj.paracambi.sarcaspd.util.Json.getJsonFromAssets
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModelFactory
-import android.widget.ArrayAdapter
-import com.br.faeterj.paracambi.sarcaspd.R
-import com.br.faeterj.paracambi.sarcaspd.domain.FirstBlock
+import com.google.gson.Gson
 
 class FormFragment : Fragment() {
 
@@ -35,13 +37,13 @@ class FormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //TODO: Inject blocks inside factory
 
-        viewModel = ViewModelProvider(this, FormViewModelFactory(FirstBlock())).get(FormViewModel::class.java)
+        viewModel = ViewModelProvider(this, FormViewModelFactory(FirstBlock(requireContext()))).get(FormViewModel::class.java)
         viewModel.generateYears()
 
-        viewModel.years.observe(viewLifecycleOwner, { years ->
+        viewModel.years.observe(viewLifecycleOwner) { years ->
             val adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, years)
             viewBinding.yearBuilt.setAdapter(adapter)
-        })
+        }
 
         viewBinding.yearBuilt.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             yearBuilt = viewBinding.yearBuilt.adapter.getItem(position).toString()
