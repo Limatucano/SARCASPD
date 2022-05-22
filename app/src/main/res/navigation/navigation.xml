@@ -3,11 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/formFragment">
+    app:startDestination="@id/splashFragment">
 
     <fragment
         android:id="@+id/formFragment"
         android:name="com.br.faeterj.paracambi.sarcaspd.view.FormFragment"
         android:label="fragment_form"
-        tools:layout="@layout/fragment_form" />
+        tools:layout="@layout/fragment_form" >
+        <argument
+            android:name="form"
+            app:argType="com.br.faeterj.paracambi.sarcaspd.data.model.Form" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.br.faeterj.paracambi.sarcaspd.view.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_formFragment"
+            app:destination="@id/formFragment" />
+    </fragment>
 </navigation>

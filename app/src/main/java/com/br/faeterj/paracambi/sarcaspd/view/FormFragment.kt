@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.br.faeterj.paracambi.sarcaspd.R
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.TextField
+import com.br.faeterj.paracambi.sarcaspd.data.model.Form
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
 import com.br.faeterj.paracambi.sarcaspd.domain.FirstBlock
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
@@ -26,8 +27,19 @@ class FormFragment : Fragment() {
     private val TAG = "FormFragment"
     private lateinit var viewBinding : FragmentFormBinding
     private lateinit var viewModel : FormViewModel
-
+    private lateinit var form : Form
     private var adapter : ArrayAdapter<*>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val bundle = arguments
+        if (bundle == null){
+            Log.e(TAG, "Erro ao transferir dados")
+            return
+        }
+        val args = FormFragmentArgs.fromBundle(bundle)
+        form = args.form
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,39 +54,68 @@ class FormFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, FormViewModelFactory(FirstBlock(requireContext()))).get(FormViewModel::class.java)
 
+        for(field in form.block){
 
-        viewModel.getFields(requireContext())
-
-        viewModel.fields.observe(viewLifecycleOwner){ fields ->
-            for(field in fields.block){
-
-                val viewTitle = TextView(requireContext())
-                lateinit var viewField : View
-                viewTitle.text = field.title
-                field.method?.let { method ->
-                    getFunctionByName(method)
-                }
-
-                when(field.fieldType){
-                    "SELECT" -> {
-                        viewField = SelectField(requireContext(), adapter, field).getField()
-                    }
-                    "TEXT" -> {
-                        viewField = TextField(requireContext(), field).getField()
-                    }
-                }
-
-                if (viewField.parent != null) {
-                    (viewField.parent as ViewGroup).removeView(viewField)
-                }
-
-                adapter = null
-                fieldsCreated.add(viewTitle)
-                fieldsCreated.add(viewField)
-                viewBinding.parentLayout.addView(viewTitle)
-                viewBinding.parentLayout.addView(viewField)
+            val viewTitle = TextView(requireContext())
+            lateinit var viewField : View
+            viewTitle.text = field.title
+            field.method?.let { method ->
+                getFunctionByName(method)
             }
+
+            when(field.fieldType){
+                "SELECT" -> {
+                    viewField = SelectField(requireContext(), adapter, field).getField()
+                }
+                "TEXT" -> {
+                    viewField = TextField(requireContext(), field).getField()
+                }
+            }
+
+            if (viewField.parent != null) {
+                (viewField.parent as ViewGroup).removeView(viewField)
+            }
+
+            adapter = null
+            fieldsCreated.add(viewTitle)
+            fieldsCreated.add(viewField)
+            viewBinding.parentLayout.addView(viewTitle)
+            viewBinding.parentLayout.addView(viewField)
         }
+
+
+//        viewModel.getFields(requireContext())
+
+//        viewModel.fields.observe(viewLifecycleOwner){ fields ->
+//            for(field in fields.block){
+//
+//                val viewTitle = TextView(requireContext())
+//                lateinit var viewField : View
+//                viewTitle.text = field.title
+//                field.method?.let { method ->
+//                    getFunctionByName(method)
+//                }
+//
+//                when(field.fieldType){
+//                    "SELECT" -> {
+//                        viewField = SelectField(requireContext(), adapter, field).getField()
+//                    }
+//                    "TEXT" -> {
+//                        viewField = TextField(requireContext(), field).getField()
+//                    }
+//                }
+//
+//                if (viewField.parent != null) {
+//                    (viewField.parent as ViewGroup).removeView(viewField)
+//                }
+//
+//                adapter = null
+//                fieldsCreated.add(viewTitle)
+//                fieldsCreated.add(viewField)
+//                viewBinding.parentLayout.addView(viewTitle)
+//                viewBinding.parentLayout.addView(viewField)
+//            }
+//        }
     }
 
     fun getFunctionByName(name: String){

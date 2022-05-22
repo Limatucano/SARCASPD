@@ -1,5 +1,10 @@
 package com.br.faeterj.paracambi.sarcaspd.data.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
+
+@Parcelize
 data class Field(
     val title : String,
     val fieldType : String,
@@ -8,6 +13,6 @@ data class Field(
     val id : String,
     val min : Int?,
     val max : Int?,
-    val defaultValue : Any?,
+    val defaultValue : @RawValue Any? = null,
     val method : String?
-)
+) : Parcelable
