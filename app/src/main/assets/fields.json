@@ -9,7 +9,8 @@
       "id": "year_built",
       "min": null,
       "max": null,
-      "defaultValue": null
+      "defaultValue": null,
+      "method" : "buildYearField"
     },
     {
       "title": "Qual o tipo de poço?",
@@ -19,7 +20,20 @@
       "id": "artesian_well_type",
       "min": null,
       "max": null,
-      "defaultValue": null
+      "defaultValue": null,
+      "method" : "buildTypeField"
+    },
+    {
+      "title": "Qual a profundidade do poço?",
+      "fieldType": "TEXT",
+      "hint": "Digite a profundidade do poço",
+      "inputType" : "none",
+      "id": "artesian_well_depth",
+      "min": 0,
+      "max": null,
+      "defaultValue": null,
+      "method" : "buildDepthField"
     }
+
   ]
 }

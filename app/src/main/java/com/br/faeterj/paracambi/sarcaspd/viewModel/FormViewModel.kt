@@ -22,7 +22,7 @@ class FormViewModel(val firstBlock: FirstBlock) : ViewModel() {
     val years = MutableLiveData<MutableList<String>>()
     val fields = MutableLiveData<Form>()
 
-    fun generateYears(){
+    fun generateYears() : MutableList<String> {
         val currentYear = Calendar.getInstance().get(Calendar.YEAR)
         val oneHundredYearAgo = currentYear - 100
 
@@ -31,7 +31,7 @@ class FormViewModel(val firstBlock: FirstBlock) : ViewModel() {
             years.add(year.toString())
         }
         years.add("Menor que ${years.last()}")
-        this.years.postValue(years)
+        return years
     }
 
     fun calculateFirstBlock(year: String?, artesianWellType : String?){

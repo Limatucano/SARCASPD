@@ -8,5 +8,6 @@ data class Field(
     val id : String,
     val min : Int?,
     val max : Int?,
-    val defaultValue : Any?
+    val defaultValue : Any?,
+    val method : String?
 )
