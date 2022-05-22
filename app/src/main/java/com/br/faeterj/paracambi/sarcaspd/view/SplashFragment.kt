@@ -16,9 +16,9 @@ import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModelFactory
 
 class SplashFragment : Fragment() {
-    private lateinit var viewBinding : FragmentSplashBinding
-    private lateinit var viewModel : FormViewModel
-    private lateinit var direction : NavDirections
+    private lateinit var viewBinding: FragmentSplashBinding
+    private lateinit var viewModel: FormViewModel
+    private lateinit var direction: NavDirections
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,11 +30,12 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this, FormViewModelFactory(FirstBlock(requireContext()))).get(
-            FormViewModel::class.java)
+            FormViewModel::class.java
+        )
 
 
         viewModel.getFields(requireContext())
-        viewModel.fields.observe(viewLifecycleOwner){
+        viewModel.fields.observe(viewLifecycleOwner) {
             direction = SplashFragmentDirections.actionSplashFragmentToFormFragment(it)
             view.findNavController().navigate(direction)
         }

@@ -25,21 +25,22 @@ import kotlin.reflect.jvm.kotlinFunction
 class FormFragment : Fragment() {
 
     private val TAG = "FormFragment"
-    private lateinit var viewBinding : FragmentFormBinding
-    private lateinit var viewModel : FormViewModel
-    private lateinit var form : Form
-    private var adapter : ArrayAdapter<*>? = null
+    private lateinit var viewBinding: FragmentFormBinding
+    private lateinit var viewModel: FormViewModel
+    private lateinit var form: Form
+    private var adapter: ArrayAdapter<*>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val bundle = arguments
-        if (bundle == null){
+        if (bundle == null) {
             Log.e(TAG, "Erro ao transferir dados")
             return
         }
         val args = FormFragmentArgs.fromBundle(bundle)
         form = args.form
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,20 +51,22 @@ class FormFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //TODO: Inject blocks inside factory
-        val fieldsCreated : MutableList<View> = mutableListOf()
+        val fieldsCreated: MutableList<View> = mutableListOf()
 
-        viewModel = ViewModelProvider(this, FormViewModelFactory(FirstBlock(requireContext()))).get(FormViewModel::class.java)
+        viewModel = ViewModelProvider(this, FormViewModelFactory(FirstBlock(requireContext()))).get(
+            FormViewModel::class.java
+        )
 
-        for(field in form.block){
+        for (field in form.block) {
 
             val viewTitle = TextView(requireContext())
-            lateinit var viewField : View
+            lateinit var viewField: View
             viewTitle.text = field.title
             field.method?.let { method ->
                 getFunctionByName(method)
             }
 
-            when(field.fieldType){
+            when (field.fieldType) {
                 "SELECT" -> {
                     viewField = SelectField(requireContext(), adapter, field).getField()
                 }
@@ -83,42 +86,9 @@ class FormFragment : Fragment() {
             viewBinding.parentLayout.addView(viewField)
         }
 
-
-//        viewModel.getFields(requireContext())
-
-//        viewModel.fields.observe(viewLifecycleOwner){ fields ->
-//            for(field in fields.block){
-//
-//                val viewTitle = TextView(requireContext())
-//                lateinit var viewField : View
-//                viewTitle.text = field.title
-//                field.method?.let { method ->
-//                    getFunctionByName(method)
-//                }
-//
-//                when(field.fieldType){
-//                    "SELECT" -> {
-//                        viewField = SelectField(requireContext(), adapter, field).getField()
-//                    }
-//                    "TEXT" -> {
-//                        viewField = TextField(requireContext(), field).getField()
-//                    }
-//                }
-//
-//                if (viewField.parent != null) {
-//                    (viewField.parent as ViewGroup).removeView(viewField)
-//                }
-//
-//                adapter = null
-//                fieldsCreated.add(viewTitle)
-//                fieldsCreated.add(viewField)
-//                viewBinding.parentLayout.addView(viewTitle)
-//                viewBinding.parentLayout.addView(viewField)
-//            }
-//        }
     }
 
-    fun getFunctionByName(name: String){
+    fun getFunctionByName(name: String) {
         val selfRef = ::getFunctionByName
         val currentClass = selfRef.javaMethod?.declaringClass
         val classFunction = currentClass?.classLoader?.loadClass(this.javaClass.name)
@@ -126,18 +96,19 @@ class FormFragment : Fragment() {
         method?.kotlinFunction?.call(this)
     }
 
-    fun buildYearField(){
+    fun buildYearField() {
         val years = viewModel.generateYears()
         adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, years)
 
     }
 
-    fun buildTypeField(){
+    fun buildTypeField() {
         val artesianWellTypes = listOf<String>(
             getString(R.string.cacimba),
             getString(R.string.escavado),
             getString(R.string.perfurado)
         )
-        adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, artesianWellTypes)
+        adapter =
+            ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, artesianWellTypes)
     }
 }

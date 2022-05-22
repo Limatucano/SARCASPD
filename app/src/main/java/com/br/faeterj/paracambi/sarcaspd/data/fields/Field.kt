@@ -4,5 +4,5 @@ import android.view.View
 
 abstract class Field() {
 
-    abstract fun getField() : View
+    abstract fun getField(): View
 }

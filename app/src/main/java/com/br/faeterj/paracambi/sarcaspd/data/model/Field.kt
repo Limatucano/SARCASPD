@@ -6,13 +6,13 @@ import kotlinx.android.parcel.RawValue
 
 @Parcelize
 data class Field(
-    val title : String,
-    val fieldType : String,
-    val hint : String?,
-    val inputType : String?,
-    val id : String,
-    val min : Int?,
-    val max : Int?,
-    val defaultValue : @RawValue Any? = null,
-    val method : String?
+    val title: String,
+    val fieldType: String,
+    val hint: String?,
+    val inputType: String?,
+    val id: String,
+    val min: Int?,
+    val max: Int?,
+    val defaultValue: @RawValue Any? = null,
+    val method: String?
 ) : Parcelable

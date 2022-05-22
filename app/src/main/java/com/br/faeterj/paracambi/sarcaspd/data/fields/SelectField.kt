@@ -10,7 +10,11 @@ import com.google.android.material.textfield.TextInputLayout
 import com.br.faeterj.paracambi.sarcaspd.data.model.Field as DetailField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.Field
 
-class SelectField(private var context: Context, private var adapter: ArrayAdapter<*>?, private var fieldDetail : DetailField) : Field() {
+class SelectField(
+    private var context: Context,
+    private var adapter: ArrayAdapter<*>?,
+    private var fieldDetail: DetailField
+) : Field() {
     override fun getField(): View {
         val newContext = ContextThemeWrapper(context, R.style.TextInputLayout)
         val viewParent = TextInputLayout(newContext)

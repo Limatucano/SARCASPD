@@ -6,7 +6,7 @@ import java.io.InputStream
 
 object Json {
 
-    fun getJsonFromAssets(context: Context, fileName: String) : String?{
+    fun getJsonFromAssets(context: Context, fileName: String): String? {
         val jsonString: String
         try {
             val inputStream: InputStream = context.assets.open(fileName)

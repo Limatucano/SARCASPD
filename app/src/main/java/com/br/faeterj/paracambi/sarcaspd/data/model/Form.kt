@@ -6,5 +6,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Form(
-    val block : List<Field>
+    val block: List<Field>
 ) : Parcelable
