@@ -1,26 +1,25 @@
 {
-  "blocks":
+  "block":
   [
     {
-      "name": "fieldA",
-      "type": "STRING",
-      "min": 10,
-      "max": 100,
-      "defaultValue": null
-    },
-    {
-      "name": "fieldB",
-      "type": "INTEGER",
-      "min": 10,
-      "max": 100,
-      "defaultValue": null
-    },
-    {
-      "name": "fieldC",
-      "type": "BOOLEAN_CHECKBOX",
+      "title": "Qual ano do poço?",
+      "fieldType": "SELECT",
+      "hint": "Selecione o ano do poço",
+      "inputType" : "number",
+      "id": "year_built",
       "min": null,
       "max": null,
-      "defaultValue": true
+      "defaultValue": null
+    },
+    {
+      "title": "Qual o tipo de poço?",
+      "fieldType": "SELECT",
+      "hint": "Selecione o tipo de poço",
+      "inputType" : "none",
+      "id": "artesian_well_type",
+      "min": null,
+      "max": null,
+      "defaultValue": null
     }
   ]
 }

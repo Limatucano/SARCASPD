@@ -1,14 +1,18 @@
 package com.br.faeterj.paracambi.sarcaspd.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.widget.*
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.br.faeterj.paracambi.sarcaspd.R
+import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
+import com.br.faeterj.paracambi.sarcaspd.data.model.Field
 import com.br.faeterj.paracambi.sarcaspd.data.model.Form
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
 import com.br.faeterj.paracambi.sarcaspd.domain.FirstBlock
@@ -36,33 +40,51 @@ class FormFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //TODO: Inject blocks inside factory
-
+        val fieldsCreated : MutableList<View> = mutableListOf()
+        val years : MutableList<String> = mutableListOf("1","2","3")
         viewModel = ViewModelProvider(this, FormViewModelFactory(FirstBlock(requireContext()))).get(FormViewModel::class.java)
         viewModel.generateYears()
 
-        viewModel.years.observe(viewLifecycleOwner) { years ->
-            val adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, years)
-            viewBinding.yearBuilt.setAdapter(adapter)
+        viewModel.getFields(requireContext())
+
+        viewModel.fields.observe(viewLifecycleOwner){ fields ->
+            for(field in fields.block){
+
+                val viewTitle = TextView(requireContext())
+                val adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, years)
+                val viewField = SelectField(requireContext(), adapter).getField()
+                viewTitle.text = field.title
+                fieldsCreated.add(viewTitle)
+                fieldsCreated.add(viewField)
+                viewBinding.parentLayout.addView(viewTitle)
+                viewBinding.parentLayout.addView(viewField)
+            }
         }
 
-        viewBinding.yearBuilt.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            yearBuilt = viewBinding.yearBuilt.adapter.getItem(position).toString()
-            viewModel.calculateFirstBlock(yearBuilt, artesianWellType)
-        }
 
-        val artesianWellTypes = listOf<String>(
-            getString(R.string.cacimba),
-            getString(R.string.escavado),
-            getString(R.string.perfurado)
-        )
-
-        val artesianWellTypeAdapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, artesianWellTypes)
-        viewBinding.artesianWellType.setAdapter(artesianWellTypeAdapter)
-
-        viewBinding.artesianWellType.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            artesianWellType = viewBinding.artesianWellType.adapter.getItem(position).toString()
-            viewModel.calculateFirstBlock(yearBuilt, artesianWellType)
-        }
+//        viewModel.years.observe(viewLifecycleOwner) { years ->
+//            val adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, years)
+//            viewBinding.yearBuilt.setAdapter(adapter)
+//        }
+//
+//        viewBinding.yearBuilt.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+//            yearBuilt = viewBinding.yearBuilt.adapter.getItem(position).toString()
+//            viewModel.calculateFirstBlock(yearBuilt, artesianWellType)
+//        }
+//
+//        val artesianWellTypes = listOf<String>(
+//            getString(R.string.cacimba),
+//            getString(R.string.escavado),
+//            getString(R.string.perfurado)
+//        )
+//
+//        val artesianWellTypeAdapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, artesianWellTypes)
+//        viewBinding.artesianWellType.setAdapter(artesianWellTypeAdapter)
+//
+//        viewBinding.artesianWellType.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+//            artesianWellType = viewBinding.artesianWellType.adapter.getItem(position).toString()
+//            viewModel.calculateFirstBlock(yearBuilt, artesianWellType)
+//        }
 
     }
 }
