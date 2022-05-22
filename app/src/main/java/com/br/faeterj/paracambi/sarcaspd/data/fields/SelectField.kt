@@ -7,7 +7,7 @@ import android.widget.*
 import com.br.faeterj.paracambi.sarcaspd.R
 import com.google.android.material.textfield.TextInputLayout
 
-class SelectField(context: Context, private var adapter: ArrayAdapter<*>) : Field(context) {
+class SelectField(private var context: Context, private var adapter: ArrayAdapter<*>) : Field() {
     override fun getField(): View {
         val newContext = ContextThemeWrapper(context, R.style.TextInputLayout)
         val viewParent = TextInputLayout(newContext)
@@ -16,6 +16,6 @@ class SelectField(context: Context, private var adapter: ArrayAdapter<*>) : Fiel
         view.setAdapter(adapter)
 
         viewParent.addView(view)
-        return viewParent
+        return view
     }
 }

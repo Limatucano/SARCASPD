@@ -1,25 +1,19 @@
 package com.br.faeterj.paracambi.sarcaspd.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.view.children
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.br.faeterj.paracambi.sarcaspd.R
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
-import com.br.faeterj.paracambi.sarcaspd.data.model.Field
-import com.br.faeterj.paracambi.sarcaspd.data.model.Form
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
 import com.br.faeterj.paracambi.sarcaspd.domain.FirstBlock
-import com.br.faeterj.paracambi.sarcaspd.util.Json.getJsonFromAssets
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModelFactory
-import com.google.gson.Gson
 
 class FormFragment : Fragment() {
 
@@ -54,6 +48,10 @@ class FormFragment : Fragment() {
                 val adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, years)
                 val viewField = SelectField(requireContext(), adapter).getField()
                 viewTitle.text = field.title
+
+                if (viewField.parent != null) {
+                    (viewField.parent as ViewGroup).removeView(viewField) // <- fix
+                }
                 fieldsCreated.add(viewTitle)
                 fieldsCreated.add(viewField)
                 viewBinding.parentLayout.addView(viewTitle)
