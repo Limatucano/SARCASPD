@@ -27,13 +27,116 @@
       "title": "Qual a profundidade do poço?",
       "fieldType": "TEXT",
       "hint": "Digite a profundidade do poço",
+      "inputType" : "text",
+      "id": "artesian_well_depth",
+      "min": 0,
+      "max": null,
+      "defaultValue": null,
+      "method" : null
+    },
+    {
+      "title": "O agente potencialmente poluidor mais próximo está a que distância?",
+      "fieldType": "TEXT",
+      "hint": "Selecione a distância em metros",
       "inputType" : "none",
       "id": "artesian_well_depth",
       "min": 0,
       "max": null,
       "defaultValue": null,
+      "method" : null
+    },
+    {
+      "category": "Uso do solo próximo ao poço",
+      "fields" : [
+        {
+          "title": "Curral",
+          "fieldType": "SELECT",
+          "hint": "Posição em relação ao poço",
+          "inputType" : "none",
+          "id": "corral",
+          "min": 0,
+          "max": null,
+          "defaultValue": null,
+          "method" : "buildNearArtesianWellField"
+        },
+        {
+          "title": "Posto de Gasolina",
+          "fieldType": "SELECT",
+          "hint": "Posição em relação ao poço",
+          "inputType" : "none",
+          "id": "gas_station",
+          "min": 0,
+          "max": null,
+          "defaultValue": null,
+          "method" : "buildNearArtesianWellField"
+        },
+        {
+          "title": "Vala negra ou sumidouro",
+          "fieldType": "SELECT",
+          "hint": "Posição em relação ao poço",
+          "inputType" : "none",
+          "id": "black_ditch",
+          "min": 0,
+          "max": null,
+          "defaultValue": null,
+          "method" : "buildNearArtesianWellField"
+        },
+        {
+          "title": "Aplicação de pesticidas e/ou fertilizantes",
+          "fieldType": "SELECT",
+          "hint": "Posição em relação ao poço",
+          "inputType" : "none",
+          "id": "pesticide",
+          "min": 0,
+          "max": null,
+          "defaultValue": null,
+          "method" : "buildNearArtesianWellField"
+        }
+      ]
+    },
+    {
+      "title": "Como está a inclinação do topo do poço em relação ao terreno?",
+      "fieldType": "SELECT",
+      "hint": "Selecione a inclinação do topo",
+      "inputType" : "none",
+      "id": "top_inclination",
+      "min": 0,
+      "max": null,
+      "defaultValue": null,
+      "method" : "buildTopInclinationField"
+    },
+    {
+      "title": "Quantas fontes poluidoras estão a menos de 100 metros?",
+      "fieldType": "SELECT",
+      "hint": "Selecione a quantidade de fontes poluidoras",
+      "inputType" : "none",
+      "id": "polluting_sources",
+      "min": 0,
+      "max": null,
+      "defaultValue": null,
+      "method" : "buildPollutingSourceField"
+    },
+    {
+      "title": "Qual é o tipo de solo presente no poço",
+      "fieldType": "SELECT",
+      "hint": "Selecione o tipo de solo",
+      "inputType" : "none",
+      "id": "soil",
+      "min": 0,
+      "max": null,
+      "defaultValue": null,
+      "method" : "buildSoilField"
+    },
+    {
+      "title": "A partir de qual profundidade é possível obter água no poço?",
+      "fieldType": "SELECT",
+      "hint": "Selecione a profundidade que obtêm água",
+      "inputType" : "none",
+      "id": "depth",
+      "min": 0,
+      "max": null,
+      "defaultValue": null,
       "method" : "buildDepthField"
     }
-
   ]
 }

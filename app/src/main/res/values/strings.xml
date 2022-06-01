@@ -10,4 +10,25 @@
     <string name="cacimba">Cacimba</string>
     <string name="escavado">Escavado</string>
     <string name="perfurado">Perfurado</string>
+
+    <string name="nao_possui">Não possui</string>
+    <string name="acima_boca">Acima da boca</string>
+    <string name="mesmo_nivel">No mesmo nível que a boca</string>
+    <string name="abaixo_boca">Abaixo da boca</string>
+
+    <string name="fonte_um">1</string>
+    <string name="fonte_dois">2</string>
+    <string name="fonte_tres">3 ou mais</string>
+
+    <string name="argila">Argila</string>
+    <string name="silte">Silte</string>
+    <string name="areia">Areia</string>
+
+    <string name="inclinada">Inclinada</string>
+    <string name="pouco_inclinada">Pouco inclinada</string>
+    <string name="plana">Plana</string>
+
+    <string name="profundidade_um">0–5</string>
+    <string name="profundidade_dois">5–15</string>
+    <string name="profundidade_tres">Maior que 15</string>
 </resources>
