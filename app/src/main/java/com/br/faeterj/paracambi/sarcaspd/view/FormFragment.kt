@@ -8,24 +8,25 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.br.faeterj.paracambi.sarcaspd.R
+import com.br.faeterj.paracambi.sarcaspd.data.fields.FieldsType
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.TextField
 import com.br.faeterj.paracambi.sarcaspd.data.model.Field
 import com.br.faeterj.paracambi.sarcaspd.data.model.Form
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
-import com.br.faeterj.paracambi.sarcaspd.domain.FirstBlock
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
-import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.reflect.jvm.javaMethod
 import kotlin.reflect.jvm.kotlinFunction
 
+@AndroidEntryPoint
 class FormFragment : Fragment() {
 
     private val TAG = "FormFragment"
     private lateinit var viewBinding: FragmentFormBinding
-    private lateinit var viewModel: FormViewModel
+    private val viewModel: FormViewModel by viewModels()
     private lateinit var form: Form
     private var adapter: ArrayAdapter<*>? = null
     private val fieldsCreated: MutableList<View> = mutableListOf()
@@ -50,12 +51,6 @@ class FormFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        //TODO: Inject blocks inside factory
-
-
-        viewModel = ViewModelProvider(this, FormViewModelFactory(FirstBlock(requireContext()))).get(
-            FormViewModel::class.java
-        )
 
         scrollingList(form.block)
 
@@ -86,10 +81,10 @@ class FormFragment : Fragment() {
         }
 
         when (field.fieldType) {
-            "SELECT" -> {
+            FieldsType.SELECT.toString() -> {
                 viewField = SelectField(requireContext(), adapter, field).getField()
             }
-            "TEXT" -> {
+            FieldsType.TEXT.toString() -> {
                 viewField = TextField(requireContext(), field).getField()
             }
         }
