@@ -1,7 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-
-    <style name="Theme.SARCASPD" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
-    </style>
-
-</resources>
