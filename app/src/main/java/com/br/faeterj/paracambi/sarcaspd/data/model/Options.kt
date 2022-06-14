@@ -4,9 +4,8 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
-
 @Parcelize
-data class Form(
-    @SerializedName("blocos") val blocks: List<Block>?,
-    @SerializedName("regrasCalculo") val rules : List<Rule>
+data class Options(
+    @SerializedName("id") val id: Int?,
+    @SerializedName("titulo") val title: String?,
 ) : Parcelable

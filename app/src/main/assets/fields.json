@@ -1,142 +1,1097 @@
 {
-  "block":
+  "blocos":
   [
     {
-      "title": "Qual ano do poço?",
-      "fieldType": "SELECT",
-      "hint": "Selecione o ano do poço",
-      "inputType" : "number",
-      "id": "year_built",
-      "min": null,
-      "max": null,
-      "defaultValue": null,
-      "method" : "buildYearField"
-    },
-    {
-      "title": "Qual o tipo de poço?",
-      "fieldType": "SELECT",
-      "hint": "Selecione o tipo de poço",
-      "inputType" : "none",
-      "id": "artesian_well_type",
-      "min": null,
-      "max": null,
-      "defaultValue": null,
-      "method" : "buildTypeField"
-    },
-    {
-      "title": "Qual a profundidade do poço?",
-      "fieldType": "TEXT",
-      "hint": "Digite a profundidade do poço",
-      "inputType" : "text",
-      "id": "artesian_well_depth",
-      "min": 0,
-      "max": null,
-      "defaultValue": null,
-      "method" : null
-    },
-    {
-      "title": "O agente potencialmente poluidor mais próximo está a que distância?",
-      "fieldType": "TEXT",
-      "hint": "Selecione a distância em metros",
-      "inputType" : "none",
-      "id": "artesian_well_depth",
-      "min": 0,
-      "max": null,
-      "defaultValue": null,
-      "method" : null
-    },
-    {
-      "category": "Uso do solo próximo ao poço",
-      "fields" : [
+      "numero":1,
+      "descricao":"Características do poço (ou fonte)",
+      "perguntas":
+      [
         {
-          "title": "Curral",
-          "fieldType": "SELECT",
-          "hint": "Posição em relação ao poço",
-          "inputType" : "none",
-          "id": "corral",
-          "min": 0,
-          "max": null,
-          "defaultValue": null,
-          "method" : "buildNearArtesianWellField"
+          "id" : 1,
+          "texto":"Qual é a idade do poço?",
+          "multiplaResposta":false,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Antes de 2000"
+            },
+            {
+              "id" : 2,
+              "titulo":"Entre 2001 e 2010"
+            },
+            {
+              "id" : 3,
+              "titulo":"Depois de 2010"
+            }
+          ]
         },
         {
-          "title": "Posto de Gasolina",
-          "fieldType": "SELECT",
-          "hint": "Posição em relação ao poço",
-          "inputType" : "none",
-          "id": "gas_station",
-          "min": 0,
-          "max": null,
-          "defaultValue": null,
-          "method" : "buildNearArtesianWellField"
+          "id" : 2,
+          "texto":"Qual o tipo do poço",
+          "multiplaResposta":false,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Cacimba"
+            },
+            {
+              "id" : 2,
+              "titulo":"Escavado"
+            },
+            {
+              "id" : 3,
+              "titulo":"Perfurado"
+            }
+          ]
         },
         {
-          "title": "Vala negra ou sumidouro",
-          "fieldType": "SELECT",
-          "hint": "Posição em relação ao poço",
-          "inputType" : "none",
-          "id": "black_ditch",
-          "min": 0,
-          "max": null,
-          "defaultValue": null,
-          "method" : "buildNearArtesianWellField"
-        },
-        {
-          "title": "Aplicação de pesticidas e/ou fertilizantes",
-          "fieldType": "SELECT",
-          "hint": "Posição em relação ao poço",
-          "inputType" : "none",
-          "id": "pesticide",
-          "min": 0,
-          "max": null,
-          "defaultValue": null,
-          "method" : "buildNearArtesianWellField"
+          "id" : 3,
+          "texto":"Qual é a profundidade total do poço?",
+          "multiplaResposta":false,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"0-10"
+            },
+            {
+              "id" : 2,
+              "titulo":"11-20"
+            },
+            {
+              "id" : 3,
+              "titulo":"maior que 20"
+            }
+          ]
         }
       ]
     },
     {
-      "title": "Como está a inclinação do topo do poço em relação ao terreno?",
-      "fieldType": "SELECT",
-      "hint": "Selecione a inclinação do topo",
-      "inputType" : "none",
-      "id": "top_inclination",
-      "min": 0,
-      "max": null,
-      "defaultValue": null,
-      "method" : "buildTopInclinationField"
+      "numero":2,
+      "descricao":"Feições superficiais",
+      "perguntas":
+      [
+        {
+          "id" : 4,
+          "texto":"Marque as atividades que estão até 100 metros do poço",
+          "multiplaResposta":true,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Curral"
+            },
+            {
+              "id" : 2,
+              "titulo":"Posto de gasolina"
+            },
+            {
+              "id" : 3,
+              "titulo":"Aplicação de pesticidas e/ou fertilizantes"
+            },
+            {
+              "id" : 4,
+              "titulo":"vala negra ou sumidouro"
+            }
+          ]
+        },
+        {
+          "id":5,
+          "texto":"Em relação à posição do poço, a atividade de curral está:",
+          "idPergunta":4,
+          "idOpcao":1,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Acima da boca do poço"
+            },
+            {
+              "id" : 2,
+              "titulo":"No mesmo nivel que a boca do poço"
+            },
+            {
+              "id" : 3,
+              "titulo":"abaixo da boca do poço"
+            }
+          ]
+        },
+        {
+          "id":6,
+          "texto":"Em relação à posição do poço, a atividade de Posto de gasolina está:",
+          "idPergunta":4,
+          "idOpcao":2,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Acima da boca do poço"
+            },
+            {
+              "id" : 2,
+              "titulo":"No mesmo nivel que a boca do poço"
+            },
+            {
+              "id" : 3,
+              "titulo":"abaixo da boca do poço"
+            }
+          ]
+        },
+        {
+          "id":7,
+          "texto":"Em relação à posição do poço, a atividade de Aplicação de pesticidas e/ou fertizantes está:",
+          "idPergunta":4,
+          "idOpcao":3,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Acima da boca do poço"
+            },
+            {
+              "id" : 2,
+              "titulo":"No mesmo nivel que a boca do poço"
+            },
+            {
+              "id" : 3,
+              "titulo":"abaixo da boca do poço"
+            }
+          ]
+        },
+        {
+          "id":8,
+          "texto":"Em relação à posição do poço, a atividade de Vala negra ou sumidouro está:",
+          "idPergunta":4,
+          "idOpcao":4,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Acima da boca do poço"
+            },
+            {
+              "id" : 2,
+              "titulo":"No mesmo nivel que a boca do poço"
+            },
+            {
+              "id" : 3,
+              "titulo":"abaixo da boca do poço"
+            }
+          ]
+        }
+      ]
+
     },
     {
-      "title": "Quantas fontes poluidoras estão a menos de 100 metros?",
-      "fieldType": "SELECT",
-      "hint": "Selecione a quantidade de fontes poluidoras",
-      "inputType" : "none",
-      "id": "polluting_sources",
-      "min": 0,
-      "max": null,
-      "defaultValue": null,
-      "method" : "buildPollutingSourceField"
+      "numero":3,
+      "descricao":"Potencial de infiltração direta para o poço",
+      "perguntas":
+      [
+        {
+          "id" : 9,
+          "texto":"Há quantos centímetros o topo do poço está acima da superfície do terreno?",
+          "multiplaResposta":false,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Maior que 30"
+            },
+            {
+              "id" : 2,
+              "titulo":"Entre 10 e 30"
+            },
+            {
+              "id" : 3,
+              "titulo":"menor que 10"
+            }
+          ]
+        },
+        {
+          "id" : 10,
+          "texto":"Como está a inclinação do topo do poço em relação ao terreno?",
+          "multiplaResposta":false,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Inclinada"
+            },
+            {
+              "id" : 2,
+              "titulo":"Pouco Inclinada"
+            },
+            {
+              "id" : 3,
+              "titulo":"Plana"
+            }
+          ]
+        }
+      ]
     },
     {
-      "title": "Qual é o tipo de solo presente no poço",
-      "fieldType": "SELECT",
-      "hint": "Selecione o tipo de solo",
-      "inputType" : "none",
-      "id": "soil",
-      "min": 0,
-      "max": null,
-      "defaultValue": null,
-      "method" : "buildSoilField"
+      "numero":4,
+      "descricao":"Características do solo",
+      "perguntas":
+      [
+        {
+          "id" : 11,
+          "texto":"Quantas fontes poluidoras estão a menos de 100 metros?",
+          "multiplaResposta":false,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"1"
+            },
+            {
+              "id" : 2,
+              "titulo":"2"
+            },
+            {
+              "id" : 3,
+              "titulo":"3 ou mais"
+            }
+          ]
+        },
+        {
+          "id" : 12,
+          "texto":"Qual é o tipo de solo presente no poço?",
+          "multiplaResposta":false,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"Argila"
+            },
+            {
+              "id" : 2,
+              "titulo":"Silte"
+            },
+            {
+              "id" : 3,
+              "titulo":"Areia"
+            }
+          ]
+        }
+      ]
     },
     {
-      "title": "A partir de qual profundidade é possível obter água no poço?",
-      "fieldType": "SELECT",
-      "hint": "Selecione a profundidade que obtêm água",
-      "inputType" : "none",
-      "id": "depth",
-      "min": 0,
-      "max": null,
-      "defaultValue": null,
-      "method" : "buildDepthField"
+      "numero":5,
+      "descricao":"Características do lençol freático",
+      "perguntas":
+      [
+        {
+          "id" : 13,
+          "texto":"A partir de qual profundidade é possível obter água no poço?",
+          "multiplaResposta":false,
+          "opcoes":[
+            {
+              "id" : 1,
+              "titulo":"0-5"
+            },
+            {
+              "id" : 2,
+              "titulo":"5-15"
+            },
+            {
+              "id" : 3,
+              "titulo":"maior que 15"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "regrasCalculo":
+  [
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":2
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":3
+        }
+      ],
+      "valor":1
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":2
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":3
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":2
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":2,
+          "idOpcao":3
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":2
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":3
+        }
+      ],
+      "valor":1
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":2
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":3
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":2
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":1,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":3,
+          "idOpcao":3
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":5,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":5,
+          "idOpcao":2
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":5,
+          "idOpcao":3
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":6,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":6,
+          "idOpcao":2
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":6,
+          "idOpcao":3
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":7,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":7,
+          "idOpcao":2
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":7,
+          "idOpcao":3
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":4
+        },
+        {
+          "idPergunta":8,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":4
+        },
+        {
+          "idPergunta":8,
+          "idOpcao":2
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":4,
+          "idOpcao":4
+        },
+        {
+          "idPergunta":8,
+          "idOpcao":3
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":1
+        }
+      ],
+      "valor":2
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":2
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":3
+        }
+      ],
+      "valor":1
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":1
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":2
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":3
+        }
+      ],
+      "valor":2
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":2
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":9,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":10,
+          "idOpcao":3
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":1
+        }
+      ],
+      "valor":1
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":2
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":3
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":1
+        }
+      ],
+      "valor":2
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":2
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":3
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":1
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":2
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":12,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":11,
+          "idOpcao":3
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":1
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":2
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":1
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":3
+        }
+      ],
+      "valor":5
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":1
+        }
+      ],
+      "valor":2
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":2
+        }
+      ],
+      "valor":3
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":2
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":3
+        }
+      ],
+      "valor":4
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":1
+        }
+      ],
+      "valor":1
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":2
+        }
+      ],
+      "valor":2
+    },
+    {
+      "opcoes":
+      [
+        {
+          "idPergunta":13,
+          "idOpcao":3
+        },
+        {
+          "idPergunta":12,
+          "idOpcao":3
+        }
+      ],
+      "valor":3
     }
   ]
 }

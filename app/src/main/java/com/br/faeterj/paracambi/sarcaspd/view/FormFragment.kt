@@ -9,17 +9,13 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.br.faeterj.paracambi.sarcaspd.R
-import com.br.faeterj.paracambi.sarcaspd.data.fields.FieldsType
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
-import com.br.faeterj.paracambi.sarcaspd.data.fields.TextField
-import com.br.faeterj.paracambi.sarcaspd.data.model.Field
+import com.br.faeterj.paracambi.sarcaspd.data.model.Block
 import com.br.faeterj.paracambi.sarcaspd.data.model.Form
+import com.br.faeterj.paracambi.sarcaspd.data.model.Question
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.reflect.jvm.javaMethod
-import kotlin.reflect.jvm.kotlinFunction
 
 @AndroidEntryPoint
 class FormFragment : Fragment() {
@@ -28,7 +24,6 @@ class FormFragment : Fragment() {
     private lateinit var viewBinding: FragmentFormBinding
     private val viewModel: FormViewModel by viewModels()
     private lateinit var form: Form
-    private var adapter: ArrayAdapter<*>? = null
     private val fieldsCreated: MutableList<View> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,120 +47,41 @@ class FormFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        scrollingList(form.block)
-
-    }
-
-    private fun scrollingList(fields: List<Field>){
-
-        for (field in fields) {
-
-            if(field.category != null && !field.fields.isNullOrEmpty()){
-                val categoryTitle = TextView(requireContext())
-                categoryTitle.text = field.category
-                viewBinding.parentLayout.addView(categoryTitle)
-                scrollingList(field.fields)
-                continue
-            }
-            buildFields(field)
+        form.blocks?.let { blocks ->
+            scrollingList(blocks)
         }
 
     }
 
-    private fun buildFields(field : Field){
+    private fun scrollingList(blocks: List<Block>){
+
+        for (block in blocks){
+            block.questions?.forEach { question ->
+                buildFields(question)
+            }
+        }
+
+    }
+
+    private fun buildFields(question : Question){
         val viewTitle = TextView(requireContext())
-        lateinit var viewField: View
-        viewTitle.text = field.title
-        field.method?.let { method ->
-            getFunctionByName(method)
-        }
+        viewTitle.text = question.text
+        lateinit var viewField : View
 
-        when (field.fieldType) {
-            FieldsType.SELECT.toString() -> {
-                viewField = SelectField(requireContext(), adapter, field).getField()
-            }
-            FieldsType.TEXT.toString() -> {
-                viewField = TextField(requireContext(), field).getField()
-            }
+        val options = question.options?.map { it.title }
+        if (options != null) {
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, options.toList())
+            viewField = SelectField(requireContext(), adapter).getField()
         }
 
         if (viewField.parent != null) {
             (viewField.parent as ViewGroup).removeView(viewField)
         }
 
-        adapter = null
-        fieldsCreated.add(viewTitle)
         fieldsCreated.add(viewField)
         viewBinding.parentLayout.addView(viewTitle)
         viewBinding.parentLayout.addView(viewField)
     }
 
-    private fun getFunctionByName(name: String) {
-        val selfRef = ::getFunctionByName
-        val currentClass = selfRef.javaMethod?.declaringClass
-        val classFunction = currentClass?.classLoader?.loadClass(this.javaClass.name)
-        val method = classFunction?.methods?.find { it.name == name }
-        method?.kotlinFunction?.call(this)
-    }
 
-    fun buildYearField() {
-        val years = viewModel.generateYears()
-        adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, years)
-
-    }
-
-    fun buildTypeField() {
-        val artesianWellTypes = listOf<String>(
-            getString(R.string.cacimba),
-            getString(R.string.escavado),
-            getString(R.string.perfurado)
-        )
-        adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, artesianWellTypes)
-    }
-
-    fun buildNearArtesianWellField(){
-        val position = listOf(
-            getString(R.string.nao_possui),
-            getString(R.string.acima_boca),
-            getString(R.string.mesmo_nivel),
-            getString(R.string.abaixo_boca)
-        )
-        adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, position)
-    }
-
-    fun buildTopInclinationField(){
-        val inclinations = listOf(
-            getString(R.string.inclinada),
-            getString(R.string.pouco_inclinada),
-            getString(R.string.plana),
-        )
-        adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, inclinations)
-    }
-
-    fun buildPollutingSourceField(){
-        val inclinations = listOf(
-            getString(R.string.fonte_um),
-            getString(R.string.fonte_dois),
-            getString(R.string.fonte_tres),
-        )
-        adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, inclinations)
-    }
-
-    fun buildSoilField(){
-        val inclinations = listOf(
-            getString(R.string.argila),
-            getString(R.string.silte),
-            getString(R.string.areia),
-        )
-        adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, inclinations)
-    }
-
-    fun buildDepthField(){
-        val inclinations = listOf(
-            getString(R.string.profundidade_um),
-            getString(R.string.profundidade_dois),
-            getString(R.string.profundidade_tres),
-        )
-        adapter = ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, inclinations)
-    }
 }
