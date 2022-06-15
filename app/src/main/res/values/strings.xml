@@ -31,4 +31,5 @@
     <string name="profundidade_um">0–5</string>
     <string name="profundidade_dois">5–15</string>
     <string name="profundidade_tres">Maior que 15</string>
+    <string name="btn_text">Enviar</string>
 </resources>

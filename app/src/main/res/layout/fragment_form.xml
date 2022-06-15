@@ -1,28 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.FormFragment"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/parent_layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="vertical">
+        android:padding="@dimen/padding_default">
 
         <TextView
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/title_size"
             android:fontFamily="@font/roboto_bold"
-            android:textColor="@color/title_color"
             android:maxLines="2"
-            android:layout_marginBottom="@dimen/margin_first_question"
-            android:text="@string/title_text"/>
+            android:text="@string/title_text"
+            android:textColor="@color/title_color"
+            android:textSize="@dimen/title_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <LinearLayout
+            android:id="@+id/parent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_first_question"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/buttonSend"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/btn_height"
+            android:text="@string/btn_text"
+            android:gravity="center"
+            android:textSize="@dimen/text_h1_size"
+            android:textColor="@color/white"
+            android:fontFamily="@font/roboto_bold"
+            android:background="@drawable/btn_send"
+            android:layout_marginTop="@dimen/margin_top_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/parent_layout" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

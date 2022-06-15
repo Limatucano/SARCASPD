@@ -4,4 +4,5 @@
     <color name="text_h1_color">#263238</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="btn_color">#039928</color>
 </resources>

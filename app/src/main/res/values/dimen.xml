@@ -2,7 +2,11 @@
 <resources>
     <dimen name="title_size">22sp</dimen>
     <dimen name="text_h1_size">18sp</dimen>
-    <dimen name="margin_first_question">30dp</dimen>
+    <dimen name="margin_first_question">25dp</dimen>
     <dimen name="margin_default">10dp</dimen>
     <dimen name="margin_between_question">15dp</dimen>
+    <dimen name="padding_default">25dp</dimen>
+    <dimen name="margin_top_button">30dp</dimen>
+    <dimen name="btn_radius_default">5dp</dimen>
+    <dimen name="btn_height">45dp</dimen>
 </resources>
