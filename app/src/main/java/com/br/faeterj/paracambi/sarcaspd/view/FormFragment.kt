@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -27,6 +28,7 @@ class FormFragment : Fragment() {
     private val viewModel: FormViewModel by viewModels()
     private lateinit var form: Form
     private val fieldsCreated: MutableList<View> = mutableListOf()
+    private val questions : MutableList<Question> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +55,7 @@ class FormFragment : Fragment() {
             scrollingList(blocks)
         }
         viewBinding.buttonSend.setOnClickListener {
-
+            val rules = form.rules
             for(fieldCreated in fieldsCreated){
                 val field = fieldCreated as Spinner
                 val optionSelected = field.selectedItem as Option
@@ -72,6 +74,7 @@ class FormFragment : Fragment() {
 
         for (block in blocks){
             block.questions?.forEach { question ->
+                questions.add(question)
                 buildFields(question)
             }
         }
@@ -84,10 +87,9 @@ class FormFragment : Fragment() {
         lateinit var viewField : View
 
         question.options?.let {
-            val adapter = SpinnerAdapter(requireContext(), question.options)
+            val adapter = SpinnerAdapter(requireContext(), question)
             viewField = SelectField(requireContext(), adapter, question).getField()
         }
-
 
 
         if (viewField.parent != null) {

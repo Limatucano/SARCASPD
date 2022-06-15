@@ -72,103 +72,92 @@
       [
         {
           "id" : 4,
-          "texto":"Marque as atividades que estão até 100 metros do poço",
-          "multiplaResposta":true,
+          "texto":"Em relação à posição do poço, a atividade de Curral está:",
+          "multiplaResposta":false,
           "opcoes":[
             {
               "id" : 1,
-              "titulo":"Curral"
+              "titulo":"Não possui"
             },
             {
               "id" : 2,
-              "titulo":"Posto de gasolina"
+              "titulo":"Acima da boca"
             },
             {
               "id" : 3,
-              "titulo":"Aplicação de pesticidas e/ou fertilizantes"
+              "titulo":"No mesmo nível que a boca"
             },
             {
               "id" : 4,
-              "titulo":"vala negra ou sumidouro"
+              "titulo":"Abaixo da boca"
             }
           ]
         },
         {
           "id":5,
-          "texto":"Em relação à posição do poço, a atividade de curral está:",
-          "idPergunta":4,
-          "idOpcao":1,
+          "texto":"Em relação à posição do poço, a atividade de Posto de gasolina está:",
+          "multiplaResposta":false,
           "opcoes":[
             {
               "id" : 1,
-              "titulo":"Acima da boca do poço"
+              "titulo":"Não possui"
             },
             {
               "id" : 2,
-              "titulo":"No mesmo nivel que a boca do poço"
+              "titulo":"Acima da boca do poço"
             },
             {
               "id" : 3,
+              "titulo":"No mesmo nivel que a boca do poço"
+            },
+            {
+              "id" : 4,
               "titulo":"abaixo da boca do poço"
             }
           ]
         },
         {
           "id":6,
-          "texto":"Em relação à posição do poço, a atividade de Posto de gasolina está:",
-          "idPergunta":4,
-          "idOpcao":2,
+          "texto":"Em relação à posição do poço, a atividade de Aplicação de pesticidas e/ou fertizantes está:",
+          "multiplaResposta":false,
           "opcoes":[
             {
               "id" : 1,
-              "titulo":"Acima da boca do poço"
+              "titulo":"Não possui"
             },
             {
               "id" : 2,
-              "titulo":"No mesmo nivel que a boca do poço"
+              "titulo":"Acima da boca do poço"
             },
             {
               "id" : 3,
+              "titulo":"No mesmo nivel que a boca do poço"
+            },
+            {
+              "id" : 4,
               "titulo":"abaixo da boca do poço"
             }
           ]
         },
         {
           "id":7,
-          "texto":"Em relação à posição do poço, a atividade de Aplicação de pesticidas e/ou fertizantes está:",
-          "idPergunta":4,
-          "idOpcao":3,
-          "opcoes":[
-            {
-              "id" : 1,
-              "titulo":"Acima da boca do poço"
-            },
-            {
-              "id" : 2,
-              "titulo":"No mesmo nivel que a boca do poço"
-            },
-            {
-              "id" : 3,
-              "titulo":"abaixo da boca do poço"
-            }
-          ]
-        },
-        {
-          "id":8,
           "texto":"Em relação à posição do poço, a atividade de Vala negra ou sumidouro está:",
-          "idPergunta":4,
-          "idOpcao":4,
+          "multiplaResposta":false,
           "opcoes":[
             {
               "id" : 1,
-              "titulo":"Acima da boca do poço"
+              "titulo":"Não possui"
             },
             {
               "id" : 2,
-              "titulo":"No mesmo nivel que a boca do poço"
+              "titulo":"Acima da boca do poço"
             },
             {
               "id" : 3,
+              "titulo":"No mesmo nivel que a boca do poço"
+            },
+            {
+              "id" : 4,
               "titulo":"abaixo da boca do poço"
             }
           ]
@@ -182,7 +171,7 @@
       "perguntas":
       [
         {
-          "id" : 9,
+          "id" : 8,
           "texto":"Há quantos centímetros o topo do poço está acima da superfície do terreno?",
           "multiplaResposta":false,
           "opcoes":[
@@ -201,7 +190,7 @@
           ]
         },
         {
-          "id" : 10,
+          "id" : 9,
           "texto":"Como está a inclinação do topo do poço em relação ao terreno?",
           "multiplaResposta":false,
           "opcoes":[
@@ -227,7 +216,7 @@
       "perguntas":
       [
         {
-          "id" : 11,
+          "id" : 10,
           "texto":"Quantas fontes poluidoras estão a menos de 100 metros?",
           "multiplaResposta":false,
           "opcoes":[
@@ -246,7 +235,7 @@
           ]
         },
         {
-          "id" : 12,
+          "id" : 11,
           "texto":"Qual é o tipo de solo presente no poço?",
           "multiplaResposta":false,
           "opcoes":[
@@ -272,7 +261,7 @@
       "perguntas":
       [
         {
-          "id" : 13,
+          "id" : 12,
           "texto":"A partir de qual profundidade é possível obter água no poço?",
           "multiplaResposta":false,
           "opcoes":[
