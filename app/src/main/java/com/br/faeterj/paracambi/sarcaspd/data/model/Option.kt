@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Options(
+data class Option(
     @SerializedName("id") val id: Int?,
     @SerializedName("titulo") val title: String?,
 ) : Parcelable

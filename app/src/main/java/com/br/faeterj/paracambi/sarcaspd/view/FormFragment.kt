@@ -5,15 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
 import com.br.faeterj.paracambi.sarcaspd.data.model.Block
 import com.br.faeterj.paracambi.sarcaspd.data.model.Form
+import com.br.faeterj.paracambi.sarcaspd.data.model.Option
 import com.br.faeterj.paracambi.sarcaspd.data.model.Question
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
+import com.br.faeterj.paracambi.sarcaspd.view.adapter.SpinnerAdapter
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,6 +52,19 @@ class FormFragment : Fragment() {
         form.blocks?.let { blocks ->
             scrollingList(blocks)
         }
+        viewBinding.buttonSend.setOnClickListener {
+
+            for(fieldCreated in fieldsCreated){
+                val field = fieldCreated as Spinner
+                val optionSelected = field.selectedItem as Option
+                val optionId = optionSelected.id
+
+                if(optionId == 0){
+                    continue
+                }
+
+            }
+        }
 
     }
 
@@ -68,11 +83,12 @@ class FormFragment : Fragment() {
         viewTitle.text = question.text
         lateinit var viewField : View
 
-        val options = question.options?.map { it.title }
-        if (options != null) {
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, options.toList())
-            viewField = SelectField(requireContext(), adapter).getField()
+        question.options?.let {
+            val adapter = SpinnerAdapter(requireContext(), question.options)
+            viewField = SelectField(requireContext(), adapter, question).getField()
         }
+
+
 
         if (viewField.parent != null) {
             (viewField.parent as ViewGroup).removeView(viewField)
