@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.LinearLayout
 import android.widget.Spinner
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
@@ -82,23 +82,59 @@ class FormFragment : Fragment() {
     }
 
     private fun buildFields(question : Question){
-        val viewTitle = TextView(requireContext())
-        viewTitle.text = question.text
         lateinit var viewField : View
 
         question.options?.let {
             val adapter = SpinnerAdapter(requireContext(), question)
             viewField = SelectField(requireContext(), adapter, question).getField()
+            listenerSpinner(viewField)
         }
-
 
         if (viewField.parent != null) {
             (viewField.parent as ViewGroup).removeView(viewField)
         }
+        if(question.idOption != null){
+            viewField.visibility = View.GONE
+        }
 
         fieldsCreated.add(viewField)
-        viewBinding.parentLayout.addView(viewTitle)
         viewBinding.parentLayout.addView(viewField)
+    }
+
+    private fun listenerSpinner(view : View){
+        val spinner = (view as LinearLayout).getChildAt(1) as Spinner
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if(position > 0){
+                    val adapter = parent?.adapter as SpinnerAdapter
+                    val optionSelected = adapter.getItem(position - 1) as Option
+                    val question = adapter.question
+
+                    if(question.multipleAnswer == true && question.id != null){
+                        val childQuestions = findMultipleAnswers(question.id)
+                        val questionByOption = childQuestions.filter { it.idOption ==  optionSelected.id}
+                        val field = fieldsCreated.filter { it.tag == questionByOption[0].id}
+
+                        field[0].visibility = if(field[0].visibility == View.GONE) View.VISIBLE else View.GONE
+                    }
+
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                Log.d(TAG,"nothing selected")
+            }
+
+        }
+    }
+
+    private fun findMultipleAnswers(idQuestion : Int): List<Question> = questions.filter { question ->
+            question.idQuestion == idQuestion
     }
 
 

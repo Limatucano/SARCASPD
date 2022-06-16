@@ -12,9 +12,17 @@ class SelectField(
     private var question: Question
 ) : Field() {
     override fun getField(): View {
-        val view = SpinnerField(context).getField() as Spinner
-        view.adapter = adapter
+        val view = LinearLayout(context)
+        view.orientation = LinearLayout.VERTICAL
+        val spinner = SpinnerField(context).getField() as Spinner
+        val textView = TextView(context)
+
+        textView.text = question.text
+        spinner.adapter = adapter
         view.tag = question.id
+
+        view.addView(textView)
+        view.addView(spinner)
         return view
     }
 }
