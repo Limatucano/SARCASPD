@@ -110,24 +110,30 @@ class FormFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                if(position > 0){
-                    val adapter = parent?.adapter as SpinnerAdapter
-                    val optionSelected = adapter.getItem(position - 1) as Option
-                    val question = adapter.question
-
-                    if(question.multipleAnswer == true && question.id != null){
-                        val childQuestions = findMultipleAnswers(question.id)
-                        val questionByOption = childQuestions.filter { it.idOption ==  optionSelected.id}
-                        val field = fieldsCreated.filter { it.tag == questionByOption[0].id}
-
-                        field[0].visibility = if(field[0].visibility == View.GONE) View.VISIBLE else View.GONE
-                    }
-
+                if(position != 0){
+                    controlVisibility(position, parent)
                 }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 Log.d(TAG,"nothing selected")
+            }
+
+        }
+    }
+
+    private fun controlVisibility(position : Int, parent : AdapterView<*>?){
+        if(parent != null){
+            val adapter = parent.adapter as SpinnerAdapter
+            val optionSelected = adapter.getItem(position - 1) as Option
+            val question = adapter.question
+
+            if(question.multipleAnswer == true && question.id != null){
+                val childQuestions = findMultipleAnswers(question.id)
+                val questionByOption = childQuestions.filter { it.idOption ==  optionSelected.id}
+                val field = fieldsCreated.filter { it.tag == questionByOption[0].id}
+
+                field[0].visibility = if(field[0].visibility == View.GONE) View.VISIBLE else View.GONE
             }
 
         }
