@@ -5,23 +5,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Adapter
 import android.widget.AdapterView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.br.faeterj.paracambi.sarcaspd.data.fields.CheckBoxField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
 import com.br.faeterj.paracambi.sarcaspd.data.model.Block
 import com.br.faeterj.paracambi.sarcaspd.data.model.Form
 import com.br.faeterj.paracambi.sarcaspd.data.model.Option
 import com.br.faeterj.paracambi.sarcaspd.data.model.Question
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
+import com.br.faeterj.paracambi.sarcaspd.view.adapter.MultipleAnswerAdapter
+import com.br.faeterj.paracambi.sarcaspd.view.adapter.OnClickCheckListener
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.SpinnerAdapter
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FormFragment : Fragment() {
+class FormFragment : Fragment(), OnClickCheckListener{
 
     private val TAG = "FormFragment"
     private lateinit var viewBinding: FragmentFormBinding
@@ -82,12 +86,13 @@ class FormFragment : Fragment() {
     }
 
     private fun buildFields(question : Question){
-        lateinit var viewField : View
 
-        question.options?.let {
+        val viewField : View = if(question.multipleAnswer == true){
+            val adapter =  MultipleAnswerAdapter(question, this)
+            CheckBoxField(requireContext(), question, adapter).getField()
+        }else{
             val adapter = SpinnerAdapter(requireContext(), question)
-            viewField = SelectField(requireContext(), adapter, question).getField()
-            listenerSpinner(viewField)
+            SelectField(requireContext(), adapter, question).getField()
         }
 
         if (viewField.parent != null) {
@@ -101,47 +106,23 @@ class FormFragment : Fragment() {
         viewBinding.parentLayout.addView(viewField)
     }
 
-    private fun listenerSpinner(view : View){
-        val spinner = (view as LinearLayout).getChildAt(1) as Spinner
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if(position != 0){
-                    controlVisibility(position, parent)
-                }
-            }
+    private fun controlVisibility(option : Option, question : Question, state: Boolean) {
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                Log.d(TAG,"nothing selected")
-            }
+        if (question.id != null) {
+            val childQuestions = findMultipleAnswers(question.id)
+            val questionByOption = childQuestions.filter { it.idOption == option.id }
+            val field = fieldsCreated.filter { it.tag == questionByOption[0].id }
 
+            field[0].visibility = if (state) View.VISIBLE else View.GONE
         }
-    }
 
-    private fun controlVisibility(position : Int, parent : AdapterView<*>?){
-        if(parent != null){
-            val adapter = parent.adapter as SpinnerAdapter
-            val optionSelected = adapter.getItem(position - 1) as Option
-            val question = adapter.question
-
-            if(question.multipleAnswer == true && question.id != null){
-                val childQuestions = findMultipleAnswers(question.id)
-                val questionByOption = childQuestions.filter { it.idOption ==  optionSelected.id}
-                val field = fieldsCreated.filter { it.tag == questionByOption[0].id}
-
-                field[0].visibility = if(field[0].visibility == View.GONE) View.VISIBLE else View.GONE
-            }
-
-        }
     }
 
     private fun findMultipleAnswers(idQuestion : Int): List<Question> = questions.filter { question ->
-            question.idQuestion == idQuestion
+        question.idQuestion == idQuestion
     }
 
-
+    override fun onOptionChecked(item: Option, question: Question, state: Boolean) {
+        controlVisibility(item, question, state)
+    }
 }

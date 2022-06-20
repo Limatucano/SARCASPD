@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <CheckBox
+        android:id="@+id/option"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:tag="checkbox"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/margin_between_question"/>
+
+</LinearLayout>

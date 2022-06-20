@@ -12,6 +12,6 @@ class SpinnerField(private var context: Context) : Field() {
     override fun getField(): View {
         val newContext = ContextThemeWrapper(context, R.style.AutoComplete)
 
-        return MultipleSpinner(newContext)
+        return Spinner(newContext)
     }
 }

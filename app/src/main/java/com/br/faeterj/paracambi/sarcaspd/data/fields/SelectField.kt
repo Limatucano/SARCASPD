@@ -13,14 +13,15 @@ class SelectField(
 ) : Field() {
     override fun getField(): View {
         val view = LinearLayout(context)
-        view.orientation = LinearLayout.VERTICAL
         val spinner = SpinnerField(context).getField() as Spinner
         val textView = TextView(context)
 
         textView.text = question.text
-        spinner.adapter = adapter
-        view.tag = question.id
 
+        spinner.adapter = adapter
+
+        view.tag = question.id
+        view.orientation = LinearLayout.VERTICAL
         view.addView(textView)
         view.addView(spinner)
         return view

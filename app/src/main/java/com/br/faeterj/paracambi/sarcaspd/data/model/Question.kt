@@ -11,5 +11,5 @@ data class Question(
     @SerializedName("multiplaResposta") val multipleAnswer : Boolean?,
     @SerializedName("idPergunta") val idQuestion : Int?,
     @SerializedName("idOpcao") val idOption : Int?,
-    @SerializedName("opcoes") val options : List<Option>?
+    @SerializedName("opcoes") val options : List<Option>
 ) : Parcelable
