@@ -12,6 +12,7 @@ class FieldsRepository @Inject constructor(
     private val context: Context
     ) {
     suspend fun readJsonToCreateField() : Form {
+        //TODO: validate json structure, if it has option, block, question sections
         return withContext(Dispatchers.IO) {
             val fieldsJson = Json.getJsonFromAssets(context, "fields.json")
             val fields: Form = Gson().fromJson(fieldsJson, Form::class.java)

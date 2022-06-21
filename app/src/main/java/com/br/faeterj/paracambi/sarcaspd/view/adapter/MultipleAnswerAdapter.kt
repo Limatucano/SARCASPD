@@ -1,13 +1,10 @@
 package com.br.faeterj.paracambi.sarcaspd.view.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.CheckedTextView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.br.faeterj.paracambi.sarcaspd.R
@@ -22,37 +19,28 @@ class MultipleAnswerAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.multiple_answer_item, parent, false)
 
-        return ViewHolder(view,parent.context)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = question.options[position]
-        holder.initialize(item,clickListener,question, position)
+        holder.initialize(item,clickListener,question)
     }
 
     override fun getItemCount(): Int = question.options.size
 
-    class ViewHolder(itemView: View, parentContext: Context) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val titleOption = itemView.findViewById<CheckBox>(R.id.option)
-        fun initialize(option: Option, action: OnClickCheckListener, question: Question, position: Int) {
+        private val titleOption: CheckBox = itemView.findViewById(R.id.option)
+        fun initialize(option: Option, action: OnClickCheckListener, question: Question) {
             titleOption.text = option.title
+            titleOption.tag = option.id
             val viewGroup = itemView as LinearLayout
             val checkBox = (viewGroup.children.find { it.tag == "checkbox" }) as CheckBox
 
             checkBox.setOnCheckedChangeListener { _, isChecked ->
                 action.onOptionChecked(option, question, isChecked)
             }
-//            for(view in viewGroup.children){
-//                if(view.tag == "checkbox"){
-//                    val checkBox = view as CheckBox
-//                    checkBox.setOnCheckedChangeListener { _, isChecked ->
-//                    if(isChecked){
-//                        action.onOptionChecked(option, question)
-//                    }
-//            }
-//                }
-//            }
         }
     }
 }

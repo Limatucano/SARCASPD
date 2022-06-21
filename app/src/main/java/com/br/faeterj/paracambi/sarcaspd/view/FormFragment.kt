@@ -5,18 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.AdapterView
+import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.Spinner
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.br.faeterj.paracambi.sarcaspd.data.fields.CheckBoxField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
-import com.br.faeterj.paracambi.sarcaspd.data.model.Block
-import com.br.faeterj.paracambi.sarcaspd.data.model.Form
-import com.br.faeterj.paracambi.sarcaspd.data.model.Option
-import com.br.faeterj.paracambi.sarcaspd.data.model.Question
+import com.br.faeterj.paracambi.sarcaspd.data.model.*
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.MultipleAnswerAdapter
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.OnClickCheckListener
@@ -60,13 +58,32 @@ class FormFragment : Fragment(), OnClickCheckListener{
         }
         viewBinding.buttonSend.setOnClickListener {
             val rules = form.rules
-            for(fieldCreated in fieldsCreated){
-                val field = fieldCreated as Spinner
-                val optionSelected = field.selectedItem as Option
-                val optionId = optionSelected.id
+            val answersSelected : MutableList<OptionsRule> = mutableListOf()
+            val questionNotMultipleAnswer = questions.filter { it.multipleAnswer == false}
+            val questionMultipleAnswer = questions.filter { it.multipleAnswer == true}
 
-                if(optionId == 0){
-                    continue
+            for(fieldCreated in fieldsCreated){
+                val viewGroup = fieldCreated as LinearLayout
+                val viewField = viewGroup.getChildAt(1)
+                val fieldName = viewField.javaClass.simpleName
+
+                when(fieldName){
+                    "Spinner" -> {
+                        val field = viewField as Spinner
+                        val optionSelected = field.selectedItem as Option
+                        val optionId = optionSelected.id
+                        val questionId = field.tag.toString().toInt()
+
+                        if(optionId != 0) {
+                            answersSelected.add(OptionsRule(questionId, optionId))
+                        }
+                    }
+                    "RecyclerView" -> {
+                        val field = viewField as RecyclerView
+                        val children = field.children
+                        val fieldsChecked = children.filter { (it as CheckBox).isChecked }
+
+                    }
                 }
 
             }

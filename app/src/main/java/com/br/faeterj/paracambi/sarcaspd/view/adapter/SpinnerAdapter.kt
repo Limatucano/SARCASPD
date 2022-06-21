@@ -10,23 +10,23 @@ import com.br.faeterj.paracambi.sarcaspd.data.model.Option
 import com.br.faeterj.paracambi.sarcaspd.data.model.Question
 
 class SpinnerAdapter(
-    val context: Context,
-    val question: Question,
+    private val context: Context,
+    private val question: Question,
 ) : BaseAdapter() {
 
-    override fun getCount(): Int {
-        if(question.options != null){
-            return question.options.size + 1
-        }
-        return 0
-    }
+    override fun getCount(): Int = question.options.size + 1
 
     override fun getItem(position: Int): Any {
-        if(question.options != null){
-            return question.options[position]
+        return if(position == 0){
+            Option(
+                id = DEFAULT_ID,
+                title = DEFAULT_TITLE
+            )
+        }else {
+            question.options[position - 1]
         }
-        return 0
     }
+
 
     override fun getItemId(position: Int): Long = position.toLong()
 
@@ -34,15 +34,7 @@ class SpinnerAdapter(
         val view: View = convertView ?: LayoutInflater.from(context).inflate(android.R.layout.simple_spinner_dropdown_item, parent, false)
         val viewHolder = ViewHolder(view)
 
-        val currentItem = if(position == 0){
-            Option(
-                id = 0,
-                title = "Selecione uma opção"
-            )
-        }else{
-            if(getItem(position - 1) == 0) return view
-            getItem(position - 1) as Option
-        }
+        val currentItem = getItem(position) as Option
         viewHolder.label.text = currentItem.title
         return view
     }
@@ -53,5 +45,10 @@ class SpinnerAdapter(
         init {
             this.label = row?.findViewById(android.R.id.text1) as TextView
         }
+    }
+
+    companion object{
+        const val DEFAULT_TITLE = "Selecione uma opção"
+        const val DEFAULT_ID = 0
     }
 }

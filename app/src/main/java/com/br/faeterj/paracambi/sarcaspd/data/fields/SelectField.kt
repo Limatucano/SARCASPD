@@ -19,6 +19,7 @@ class SelectField(
         textView.text = question.text
 
         spinner.adapter = adapter
+        spinner.tag = question.id
 
         view.tag = question.id
         view.orientation = LinearLayout.VERTICAL

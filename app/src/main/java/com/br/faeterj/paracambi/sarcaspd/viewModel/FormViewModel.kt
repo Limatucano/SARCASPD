@@ -23,4 +23,8 @@ class FormViewModel @Inject constructor(
         }
     }
 
+    fun calculateFields(){
+
+    }
+
 }
