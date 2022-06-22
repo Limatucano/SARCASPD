@@ -24,6 +24,7 @@ class CheckBoxField(
 
         recyclerview.layoutManager = GridLayoutManager(context, SPAN_COUNT)
         recyclerview.adapter = adapter
+        recyclerview.tag = question.id
         recyclerview.isNestedScrollingEnabled = false
 
         view.tag = question.id

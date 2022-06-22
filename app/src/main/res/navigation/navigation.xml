@@ -13,6 +13,9 @@
         <argument
             android:name="form"
             app:argType="com.br.faeterj.paracambi.sarcaspd.data.model.Form" />
+        <action
+            android:id="@+id/action_formFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
@@ -22,5 +25,16 @@
         <action
             android:id="@+id/action_splashFragment_to_formFragment"
             app:destination="@id/formFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.br.faeterj.paracambi.sarcaspd.view.ResultFragment"
+        android:label="fragment_result"
+        tools:layout="@layout/fragment_result" >
+        <argument
+            android:name="result"
+            app:argType="com.br.faeterj.paracambi.sarcaspd.data.model.FinalResult"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
 </navigation>

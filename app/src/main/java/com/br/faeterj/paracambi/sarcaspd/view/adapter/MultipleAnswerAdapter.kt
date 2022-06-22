@@ -5,11 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.LinearLayout
-import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.br.faeterj.paracambi.sarcaspd.R
 import com.br.faeterj.paracambi.sarcaspd.data.model.Option
 import com.br.faeterj.paracambi.sarcaspd.data.model.Question
+import com.br.faeterj.paracambi.sarcaspd.util.ViewUtil
 
 class MultipleAnswerAdapter(
     private val question : Question,
@@ -36,10 +36,12 @@ class MultipleAnswerAdapter(
             titleOption.text = option.title
             titleOption.tag = option.id
             val viewGroup = itemView as LinearLayout
-            val checkBox = (viewGroup.children.find { it.tag == "checkbox" }) as CheckBox
-
-            checkBox.setOnCheckedChangeListener { _, isChecked ->
-                action.onOptionChecked(option, question, isChecked)
+            val checkBoxes = ViewUtil.findViewsWithType(viewGroup, CheckBox::class.java)
+            if(checkBoxes.isNotEmpty()){
+                val checkBox = checkBoxes[0]
+                checkBox.setOnCheckedChangeListener { _, isChecked ->
+                    action.onOptionChecked(option, question, isChecked)
+                }
             }
         }
     }

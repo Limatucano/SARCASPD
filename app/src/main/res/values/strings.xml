@@ -32,4 +32,10 @@
     <string name="profundidade_dois">5–15</string>
     <string name="profundidade_tres">Maior que 15</string>
     <string name="btn_text">Enviar</string>
+
+    <string name="result_title">Conclusão da avaliação</string>
+    <string name="result_risk_title">Risco:</string>
+    <string name="result_risk_total_title">Risco Total:</string>
+    <string name="result_action_title">Ação a ser desenvolvida:</string>
+
 </resources>

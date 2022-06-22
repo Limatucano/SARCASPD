@@ -5,13 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.LinearLayout
-import android.widget.Spinner
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
 import com.br.faeterj.paracambi.sarcaspd.data.fields.CheckBoxField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
 import com.br.faeterj.paracambi.sarcaspd.data.model.*
@@ -26,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FormFragment : Fragment(), OnClickCheckListener{
 
     private val TAG = "FormFragment"
+    private lateinit var direction: NavDirections
     private lateinit var viewBinding: FragmentFormBinding
     private val viewModel: FormViewModel by viewModels()
     private lateinit var form: Form
@@ -56,39 +54,18 @@ class FormFragment : Fragment(), OnClickCheckListener{
         form.blocks?.let { blocks ->
             scrollingList(blocks)
         }
+        viewModel.result.observe(viewLifecycleOwner){ result ->
+            direction = FormFragmentDirections.actionFormFragmentToResultFragment(result)
+            view.findNavController().navigate(direction)
+        }
         viewBinding.buttonSend.setOnClickListener {
-            val rules = form.rules
-            val answersSelected : MutableList<OptionsRule> = mutableListOf()
-            val questionNotMultipleAnswer = questions.filter { it.multipleAnswer == false}
-            val questionMultipleAnswer = questions.filter { it.multipleAnswer == true}
-
-            for(fieldCreated in fieldsCreated){
-                val viewGroup = fieldCreated as LinearLayout
-                val viewField = viewGroup.getChildAt(1)
-                val fieldName = viewField.javaClass.simpleName
-
-                when(fieldName){
-                    "Spinner" -> {
-                        val field = viewField as Spinner
-                        val optionSelected = field.selectedItem as Option
-                        val optionId = optionSelected.id
-                        val questionId = field.tag.toString().toInt()
-
-                        if(optionId != 0) {
-                            answersSelected.add(OptionsRule(questionId, optionId))
-                        }
-                    }
-                    "RecyclerView" -> {
-                        val field = viewField as RecyclerView
-                        val children = field.children
-                        val fieldsChecked = children.filter { (it as CheckBox).isChecked }
-
-                    }
-                }
-
-            }
+            viewModel.calculateFields(form.rules,fieldsCreated)
         }
 
+    }
+
+    override fun onOptionChecked(item: Option, question: Question, state: Boolean) {
+        controlVisibility(item, question, state)
     }
 
     private fun scrollingList(blocks: List<Block>){
@@ -139,7 +116,4 @@ class FormFragment : Fragment(), OnClickCheckListener{
         question.idQuestion == idQuestion
     }
 
-    override fun onOptionChecked(item: Option, question: Question, state: Boolean) {
-        controlVisibility(item, question, state)
-    }
 }
