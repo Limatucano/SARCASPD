@@ -16,3 +16,4 @@ em quais os locais devem-se efetuar prioritariamente análises químicas e micro
 - Coroutines
 - Gson
 - Navigation
+- teste unitário com junit
