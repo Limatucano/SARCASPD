@@ -31,56 +31,40 @@ class FormViewModel @Inject constructor(
     }
 
     fun calculateFields(rules: List<Rule>, fieldsCreated : List<View>){
-        val answersSelected : ArrayList<OptionsRule> = arrayListOf()
+        viewModelScope.launch(Dispatchers.IO) {
+            val answersSelected : ArrayList<OptionsRule> = arrayListOf()
 
-        for(fieldCreated in fieldsCreated){
-            val viewGroup = fieldCreated as LinearLayout
-            val viewField = viewGroup.getChildAt(1)
+            for(fieldCreated in fieldsCreated){
+                val viewGroup = fieldCreated as LinearLayout
+                val viewField = viewGroup.getChildAt(1)
 
-            when(viewField.javaClass.simpleName){
-                "Spinner" -> {
-                    val field = viewField as Spinner
-                    val optionSelected = field.selectedItem as Option
-                    val optionId = optionSelected.id
-                    val questionId = field.tag.toString().toInt()
+                when(viewField.javaClass.simpleName){
+                    "Spinner" -> {
+                        val field = viewField as Spinner
+                        val optionSelected = field.selectedItem as Option
+                        val optionId = optionSelected.id
+                        val questionId = field.tag.toString().toInt()
 
-                    if(optionId != 0) {
-                        answersSelected.add(OptionsRule(questionId, optionId))
-                    }
-                }
-                "RecyclerView" -> {
-                    val parent = viewField as RecyclerView
-                    val checkBoxes = ViewUtil.findViewsWithType(parent, CheckBox::class.java)
-                    val checkBoxesChecked = checkBoxes.filter { it.isChecked }
-
-                    for(checkBox in checkBoxesChecked){
-                        val optionId = checkBox.tag.toString().toInt()
-                        val questionId = parent.tag.toString().toInt()
-                        answersSelected.add(OptionsRule(questionId, optionId))
-                    }
-                }
-            }
-        }
-        var points = 0
-        for(rule in rules){
-            if(rule.options != null && rule.value != null){
-                var counter = 0
-                for (option in rule.options){
-                    for(answers in answersSelected){
-                        if(answers == option){
-                            counter++
-                            break
+                        if(optionId != 0) {
+                            answersSelected.add(OptionsRule(questionId, optionId))
                         }
                     }
-                    if(counter > 1){
-                        counter = 0
-                        points += rule.value
+                    "RecyclerView" -> {
+                        val parent = viewField as RecyclerView
+                        val checkBoxes = ViewUtil.findViewsWithType(parent, CheckBox::class.java)
+                        val checkBoxesChecked = checkBoxes.filter { it.isChecked }
+
+                        for(checkBox in checkBoxesChecked){
+                            val optionId = checkBox.tag.toString().toInt()
+                            val questionId = parent.tag.toString().toInt()
+                            answersSelected.add(OptionsRule(questionId, optionId))
+                        }
                     }
                 }
             }
+            val points = fieldsRepository.calculateFields(rules, answersSelected)
+            result.postValue(fieldsRepository.getFinalResult(points))
         }
-
-        result.postValue(fieldsRepository.getFinalResult(points))
     }
 
 }

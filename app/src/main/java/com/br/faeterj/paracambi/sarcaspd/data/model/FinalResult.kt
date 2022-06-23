@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FinalResult(
-    val total : Int,
+    var total : Int? = null,
     val risk : String,
     val action : String,
 ) : Parcelable

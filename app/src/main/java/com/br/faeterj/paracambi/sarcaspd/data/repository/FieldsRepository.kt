@@ -1,9 +1,12 @@
 package com.br.faeterj.paracambi.sarcaspd.data.repository
 
 import android.content.Context
-import com.br.faeterj.paracambi.sarcaspd.data.model.FinalResult
-import com.br.faeterj.paracambi.sarcaspd.data.model.Form
+import com.br.faeterj.paracambi.sarcaspd.data.model.*
 import com.br.faeterj.paracambi.sarcaspd.util.Json
+import com.br.faeterj.paracambi.sarcaspd.util.ResultUtil.ALTO
+import com.br.faeterj.paracambi.sarcaspd.util.ResultUtil.ATENCAO
+import com.br.faeterj.paracambi.sarcaspd.util.ResultUtil.BAIXO
+import com.br.faeterj.paracambi.sarcaspd.util.ResultUtil.finalResults
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,28 +24,50 @@ class FieldsRepository @Inject constructor(
         }
     }
 
-    fun getFinalResult(point : Int) : FinalResult? = when{
+    fun getFinalResult(point : Int) : FinalResult? {
+        lateinit var finalResult: FinalResult
+        return when{
             point in 0..14->{
-                 FinalResult(
-                    total = point,
-                    risk = "Baixo - Reduzido",
-                    action = "Teste a água anualmente para bactérias e nitrato"
-                )
+                finalResult = finalResults[BAIXO]!!
+                finalResult.total = point
+                finalResult
             }
             point in 15..25->{
-                 FinalResult(
-                    total = point,
-                    risk = "Atenção -Cuidado",
-                    action = "Teste a água. Execute a análise de risco mais detalhada ou aplique outra avaliação mais completa"
-                )
+                finalResult = finalResults[ATENCAO]!!
+                finalResult.total = point
+                finalResult
             }
             point >= 26 -> {
-                 FinalResult(
-                    total = point,
-                    risk = "Alto - Perigo",
-                    action = "Teste imediatamente a água. Desenvolva um"
-                )
+                finalResult = finalResults[ALTO]!!
+                finalResult.total = point
+                finalResult
             }
             else ->  null
+        }
+    }
+
+    suspend fun calculateFields(rules: List<Rule>, answersSelected : List<OptionsRule>) : Int{
+        return withContext(Dispatchers.IO){
+
+            var points = 0
+            for(rule in rules){
+                if(rule.options != null && rule.value != null){
+                    var counter = 0
+                    for (option in rule.options){
+                        for(answers in answersSelected){
+                            if(answers == option){
+                                counter++
+                                break
+                            }
+                        }
+                        if(counter > 1){
+                            counter = 0
+                            points += rule.value
+                        }
+                    }
+                }
+            }
+            points
+        }
     }
 }
