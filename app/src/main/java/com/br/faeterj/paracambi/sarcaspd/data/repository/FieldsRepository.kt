@@ -10,17 +10,33 @@ import com.br.faeterj.paracambi.sarcaspd.util.ResultUtil.finalResults
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONException
+import org.json.JSONObject
 import javax.inject.Inject
 
 class FieldsRepository @Inject constructor(
     private val context: Context
     ) {
-    suspend fun readJsonToCreateField() : Form {
+
+    suspend fun readJsonToCreateField() : Form? {
         //TODO: validate json structure, if it has option, block, question sections
         return withContext(Dispatchers.IO) {
-            val fieldsJson = Json.getJsonFromAssets(context, "fields.json")
-            val fields: Form = Gson().fromJson(fieldsJson, Form::class.java)
-            fields
+            val fieldsJson = Json.getJsonFromAssets(context, "fields.json") ?: return@withContext null
+            val validationJson = validateJson(fieldsJson)
+            if(!validationJson){
+                return@withContext null
+            }
+            Gson().fromJson(fieldsJson, Form::class.java)
+
+        }
+    }
+
+    private fun validateJson(fieldsJson : String) : Boolean{
+        try {
+            val json = JSONObject(fieldsJson)
+            return true
+        }catch (e : JSONException){
+            return false
         }
     }
 

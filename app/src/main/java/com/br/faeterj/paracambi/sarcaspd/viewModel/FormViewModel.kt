@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import com.br.faeterj.paracambi.sarcaspd.data.model.*
 import com.br.faeterj.paracambi.sarcaspd.data.repository.FieldsRepository
+import com.br.faeterj.paracambi.sarcaspd.util.Resource
 import com.br.faeterj.paracambi.sarcaspd.util.ViewUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,11 +23,16 @@ class FormViewModel @Inject constructor(
 ) : ViewModel() {
     val fields = MutableLiveData<Form>()
     val result = MutableLiveData<FinalResult?>()
-
+    val error = MutableLiveData<Resource>()
     fun getFields() {
         viewModelScope.launch(Dispatchers.IO) {
             val form = fieldsRepository.readJsonToCreateField()
-            fields.postValue(form)
+            if(form == null){
+                error.postValue(Resource.errorJson())
+            }
+            form?.let {
+                fields.postValue(it)
+            }
         }
     }
 

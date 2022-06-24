@@ -37,5 +37,6 @@
     <string name="result_risk_title">Risco:</string>
     <string name="result_risk_total_title">Risco Total:</string>
     <string name="result_action_title">Ação a ser desenvolvida:</string>
+    <string name="loading_message">Carregando</string>
 
 </resources>

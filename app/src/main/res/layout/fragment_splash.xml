@@ -5,16 +5,22 @@
     android:layout_height="match_parent"
     tools:context=".view.SplashFragment"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/title_color">
 
 
     <TextView
+        android:id="@+id/loading_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Display1"
-        android:text="Carregando..."/>
+        android:textSize="22sp"
+        android:textAlignment="center"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/white"
+        android:text="@string/loading_message"/>
 
     <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="40dp"
         android:layout_height="40dp"/>
 </LinearLayout>
