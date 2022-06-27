@@ -19,7 +19,6 @@ class FieldsRepository @Inject constructor(
     ) {
 
     suspend fun readJsonToCreateField() : Form? {
-        //TODO: validate json structure, if it has option, block, question sections
         return withContext(Dispatchers.IO) {
             val fieldsJson = Json.getJsonFromAssets(context, "fields.json") ?: return@withContext null
             val validationJson = validateJson(fieldsJson)
@@ -34,6 +33,19 @@ class FieldsRepository @Inject constructor(
     private fun validateJson(fieldsJson : String) : Boolean{
         try {
             val json = JSONObject(fieldsJson)
+            val blocks = json.getJSONArray("blocos")
+            for (i in 0 until blocks.length()){
+                val questions = blocks.getJSONObject(i).getJSONArray("perguntas")
+                if(questions.length() == 0){
+                    return false
+                }
+                for(j in 0 until questions.length()){
+                    val options = questions.getJSONObject(j).getJSONArray("opcoes")
+                    if(options.length() == 0){
+                        return false
+                    }
+                }
+            }
             return true
         }catch (e : JSONException){
             return false
