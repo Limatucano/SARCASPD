@@ -6,6 +6,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.br.faeterj.paracambi.sarcaspd.R
 import com.br.faeterj.paracambi.sarcaspd.data.model.Question
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.MultipleAnswerAdapter
 
@@ -18,8 +19,9 @@ class CheckBoxField(
     override fun getField(): View {
         val view = LinearLayout(context)
         val recyclerview = RecyclerView(context)
-        val textView = TextView(context)
+        val textView = TextView(context,null,0, R.style.questionTitleStyle)
 
+        textView.setPadding(0,40,0,0)
         textView.text = question.text
 
         recyclerview.layoutManager = GridLayoutManager(context, SPAN_COUNT)
