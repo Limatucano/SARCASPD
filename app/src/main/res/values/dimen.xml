@@ -3,6 +3,7 @@
     <dimen name="title_size">22sp</dimen>
     <dimen name="question_title_size">16sp</dimen>
     <dimen name="text_h1_size">18sp</dimen>
+    <dimen name="text_h2_size">16sp</dimen>
     <dimen name="margin_first_question">25dp</dimen>
     <dimen name="margin_default">10dp</dimen>
     <dimen name="margin_between_question">15dp</dimen>

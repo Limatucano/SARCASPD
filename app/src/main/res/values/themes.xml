@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="Theme.SARCASPD" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.SARCASPD" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:statusBarColor" >@color/title_color</item>
     </style>
 

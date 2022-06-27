@@ -9,6 +9,8 @@
         android:layout_width="match_parent"
         android:gravity="center_vertical"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text_h2_size"
+        android:textColor="@color/text_h1_color"
         android:layout_marginBottom="@dimen/margin_between_question"/>
 
 </LinearLayout>
