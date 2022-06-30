@@ -24,6 +24,8 @@ class FormViewModel @Inject constructor(
     val fields = MutableLiveData<Form>()
     val result = MutableLiveData<FinalResult?>()
     val error = MutableLiveData<Resource>()
+    val fieldsError = MutableLiveData<List<View>?>()
+
     fun getFields() {
         viewModelScope.launch(Dispatchers.IO) {
             val form = fieldsRepository.readJsonToCreateField()
@@ -39,7 +41,7 @@ class FormViewModel @Inject constructor(
     fun calculateFields(rules: List<Rule>, fieldsCreated : List<View>){
         viewModelScope.launch(Dispatchers.IO) {
             val answersSelected : ArrayList<OptionsRule> = arrayListOf()
-
+            val fieldsSelected : ArrayList<View> = arrayListOf()
             for(fieldCreated in fieldsCreated){
                 val viewGroup = fieldCreated as LinearLayout
                 val viewField = viewGroup.getChildAt(1)
@@ -53,6 +55,7 @@ class FormViewModel @Inject constructor(
 
                         if(optionId != 0) {
                             answersSelected.add(OptionsRule(questionId, optionId))
+                            fieldsSelected.add(fieldCreated)
                         }
                     }
                     "RecyclerView" -> {
@@ -64,13 +67,30 @@ class FormViewModel @Inject constructor(
                             val optionId = checkBox.tag.toString().toInt()
                             val questionId = parent.tag.toString().toInt()
                             answersSelected.add(OptionsRule(questionId, optionId))
+                            fieldsSelected.add(fieldCreated)
                         }
                     }
                 }
             }
+            val formError = validateForm(fieldsCreated,fieldsSelected)
+            if(formError != null){
+                fieldsError.postValue(formError)
+                return@launch
+            }
             val points = fieldsRepository.calculateFields(rules, answersSelected)
             result.postValue(fieldsRepository.getFinalResult(points))
+
         }
+    }
+
+    private fun validateForm(allFields : List<View>, repliedFields : List<View>) : List<View>? {
+
+        if(allFields !== repliedFields){
+            if(allFields.size != repliedFields.size) return null
+
+
+        }
+        return null
     }
 
 }
