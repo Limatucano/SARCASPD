@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
@@ -20,7 +22,7 @@ import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FormFragment : Fragment(), OnClickCheckListener{
+class FormFragment : Fragment(), OnClickCheckListener {
 
     private val TAG = "FormFragment"
     private lateinit var direction: NavDirections
@@ -28,7 +30,7 @@ class FormFragment : Fragment(), OnClickCheckListener{
     private val viewModel: FormViewModel by viewModels()
     private lateinit var form: Form
     private val fieldsCreated: MutableList<View> = mutableListOf()
-    private val questions : MutableList<Question> = mutableListOf()
+    private val questions: MutableList<Question> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,12 +56,26 @@ class FormFragment : Fragment(), OnClickCheckListener{
         form.blocks?.let { blocks ->
             scrollingList(blocks)
         }
-        viewModel.result.observe(viewLifecycleOwner){ result ->
-            direction = FormFragmentDirections.actionFormFragmentToResultFragment(result)
-            view.findNavController().navigate(direction)
+        viewModel.result.observe(viewLifecycleOwner) { result ->
+            if(result != null){
+                direction = FormFragmentDirections.actionFormFragmentToResultFragment(result)
+                view.findNavController().navigate(direction)
+            }
+            viewModel.result.postValue(null)
         }
         viewBinding.buttonSend.setOnClickListener {
-            viewModel.calculateFields(form.rules,fieldsCreated)
+            viewModel.calculateFields(form.rules, fieldsCreated)
+        }
+
+        viewModel.fieldsError.observe(viewLifecycleOwner) { views ->
+            val allTextView = getAllTextViews()
+            for (textView in allTextView) {
+                textView.error = null
+            }
+            for (fieldError in views) {
+                val textView = (fieldError as TextView)
+                textView.error = "error"
+            }
         }
 
     }
@@ -68,9 +84,15 @@ class FormFragment : Fragment(), OnClickCheckListener{
         controlVisibility(item, question, state)
     }
 
-    private fun scrollingList(blocks: List<Block>){
+    private fun getAllTextViews(): List<TextView> = fieldsCreated.filter {
+        it.visibility == View.VISIBLE
+    }.map {
+        ((it as LinearLayout).getChildAt(0) as TextView)
+    }
 
-        for (block in blocks){
+    private fun scrollingList(blocks: List<Block>) {
+
+        for (block in blocks) {
             block.questions?.forEach { question ->
                 questions.add(question)
                 buildFields(question)
@@ -79,12 +101,12 @@ class FormFragment : Fragment(), OnClickCheckListener{
 
     }
 
-    private fun buildFields(question : Question){
+    private fun buildFields(question: Question) {
 
-        val viewField : View = if(question.multipleAnswer == true){
-            val adapter =  MultipleAnswerAdapter(question, this)
+        val viewField: View = if (question.multipleAnswer == true) {
+            val adapter = MultipleAnswerAdapter(question, this)
             CheckBoxField(requireContext(), question, adapter).getField()
-        }else{
+        } else {
             val adapter = SpinnerAdapter(requireContext(), question)
             SelectField(requireContext(), adapter, question).getField()
         }
@@ -92,7 +114,7 @@ class FormFragment : Fragment(), OnClickCheckListener{
         if (viewField.parent != null) {
             (viewField.parent as ViewGroup).removeView(viewField)
         }
-        if(question.idOption != null){
+        if (question.idOption != null) {
             viewField.visibility = View.GONE
         }
 
@@ -100,7 +122,7 @@ class FormFragment : Fragment(), OnClickCheckListener{
         viewBinding.parentLayout.addView(viewField)
     }
 
-    private fun controlVisibility(option : Option, question : Question, state: Boolean) {
+    private fun controlVisibility(option: Option, question: Question, state: Boolean) {
 
         if (question.id != null) {
             val childQuestions = findMultipleAnswers(question.id)
@@ -112,8 +134,9 @@ class FormFragment : Fragment(), OnClickCheckListener{
 
     }
 
-    private fun findMultipleAnswers(idQuestion : Int): List<Question> = questions.filter { question ->
-        question.idQuestion == idQuestion
-    }
-
+    private fun findMultipleAnswers(idQuestion: Int): List<Question> =
+        questions.filter { question ->
+            question.idQuestion == idQuestion
+        }
 }
+
