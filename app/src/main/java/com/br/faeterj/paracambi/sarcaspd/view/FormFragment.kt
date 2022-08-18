@@ -1,5 +1,7 @@
 package com.br.faeterj.paracambi.sarcaspd.view
 
+import android.Manifest
+import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,11 +17,13 @@ import com.br.faeterj.paracambi.sarcaspd.data.fields.CheckBoxField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
 import com.br.faeterj.paracambi.sarcaspd.data.model.*
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
+import com.br.faeterj.paracambi.sarcaspd.util.LocationProvider
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.MultipleAnswerAdapter
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.OnClickCheckListener
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.SpinnerAdapter
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class FormFragment : Fragment(), OnClickCheckListener {
@@ -31,14 +35,11 @@ class FormFragment : Fragment(), OnClickCheckListener {
     private lateinit var form: Form
     private val fieldsCreated: MutableList<View> = mutableListOf()
     private val questions: MutableList<Question> = mutableListOf()
+    private var ALL_PERMISSION_RESULT = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bundle = arguments
-        if (bundle == null) {
-            Log.e(TAG, "Erro ao transferir dados")
-            return
-        }
+        val bundle = arguments ?: return
         val args = FormFragmentArgs.fromBundle(bundle)
         form = args.form
     }
@@ -53,6 +54,25 @@ class FormFragment : Fragment(), OnClickCheckListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        //TODO: create base activity and add request method there
+        //TODO: refactor this proof of concept
+        requestPermissions(
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ),
+            ALL_PERMISSION_RESULT
+        )
+
+        val locationProvider = LocationProvider(requireContext()){
+            Log.d(TAG,it.altitude.toString())
+        }
+        val latitude = locationProvider.getLatitude()
+        val longitude = locationProvider.getLongitude()
+
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        val addresses = geocoder.getFromLocation(latitude,longitude,1)
+        val address = addresses[0].getAddressLine(0)
         form.blocks?.let { blocks ->
             scrollingList(blocks)
         }
@@ -80,6 +100,13 @@ class FormFragment : Fragment(), OnClickCheckListener {
 
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
     override fun onOptionChecked(item: Option, question: Question, state: Boolean) {
         controlVisibility(item, question, state)
     }
