@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.br.faeterj.paracambi.sarcaspd.R
+import com.br.faeterj.paracambi.sarcaspd.data.model.Address
 import com.br.faeterj.paracambi.sarcaspd.util.LocationProvider
 import java.util.*
 
@@ -29,6 +30,7 @@ open class BaseFragment<V: ViewBinding>(private val inflate: Inflate<V>) : Fragm
     private lateinit var _binding : V
     val binding get() = _binding
     private lateinit var requestMultiplePermissions: ActivityResultLauncher<Array<String>>
+    private lateinit var address: Address
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,6 +44,8 @@ open class BaseFragment<V: ViewBinding>(private val inflate: Inflate<V>) : Fragm
         }
         if(!hasPermissions(requireContext(),PERMISSIONS)){
             requestMultiplePermissions.launch(PERMISSIONS)
+        }else{
+            getLocation()
         }
 
     }
@@ -75,9 +79,21 @@ open class BaseFragment<V: ViewBinding>(private val inflate: Inflate<V>) : Fragm
         val longitude = locationProvider.getLongitude()
 
         val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val addresses = geocoder.getFromLocation(latitude,longitude,1)
-        val address = addresses[0].getAddressLine(0)
+        val addresses = geocoder.getFromLocation(latitude,longitude,1)[0]
+        addresses.apply {
+            address = Address(
+                address = getAddressLine(0),
+                street = thoroughfare,
+                city = subAdminArea,
+                number = subThoroughfare,
+                state = adminArea,
+                country = countryName,
+                postalCode = postalCode,
+                knownName = featureName
+            )
+        }
     }
+
     fun setupToolbar(
         title : String = "",
         navigationBack : Boolean = true,
