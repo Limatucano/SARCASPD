@@ -1,9 +1,6 @@
 package com.br.faeterj.paracambi.sarcaspd.view
 
-import android.Manifest
-import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -16,21 +13,19 @@ import com.br.faeterj.paracambi.sarcaspd.data.fields.CheckBoxField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
 import com.br.faeterj.paracambi.sarcaspd.data.model.*
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
-import com.br.faeterj.paracambi.sarcaspd.util.LocationProvider
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.MultipleAnswerAdapter
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.OnClickCheckListener
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.SpinnerAdapter
 import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class FormFragment : BaseFragment<FragmentFormBinding>(FragmentFormBinding::inflate), OnClickCheckListener {
 
-    private val TAG = "FormFragment"
     private lateinit var direction: NavDirections
     private val viewModel: FormViewModel by viewModels()
     private lateinit var form: Form
+    private lateinit var address: Address
     private val fieldsCreated: MutableList<View> = mutableListOf()
     private val questions: MutableList<Question> = mutableListOf()
 
@@ -40,6 +35,7 @@ class FormFragment : BaseFragment<FragmentFormBinding>(FragmentFormBinding::infl
         val bundle = arguments ?: return
         val args = FormFragmentArgs.fromBundle(bundle)
         form = args.form
+        address = args.address
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,6 +45,9 @@ class FormFragment : BaseFragment<FragmentFormBinding>(FragmentFormBinding::infl
             title = getString(R.string.title_text),
             navigationBack = false
         )
+
+        binding.address.text = address.address
+
         form.blocks?.let { blocks ->
             scrollingList(blocks)
         }

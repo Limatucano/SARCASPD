@@ -29,31 +29,21 @@ open class BaseFragment<V: ViewBinding>(private val inflate: Inflate<V>) : Fragm
 
     private lateinit var _binding : V
     val binding get() = _binding
-    private lateinit var requestMultiplePermissions: ActivityResultLauncher<Array<String>>
-    private lateinit var address: Address
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requestMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permission ->
-            permission.forEach { actionMap ->
-                when(actionMap.key){
-                    Manifest.permission.ACCESS_COARSE_LOCATION -> checkPermission(actionMap.value)
-                    Manifest.permission.ACCESS_FINE_LOCATION -> checkPermission(actionMap.value)
-                }
-            }
-        }
-        if(!hasPermissions(requireContext(),PERMISSIONS)){
-            requestMultiplePermissions.launch(PERMISSIONS)
-        }else{
-            getLocation()
-        }
-
+    fun setupToolbar(
+        title : String = "",
+        navigationBack : Boolean = true,
+        visibility : Boolean = true
+    ){
+        (requireActivity() as MainActivity).setupToolbar(
+            title = title,
+            navigationBack = navigationBack,
+            visibility = visibility
+        )
     }
 
-     fun checkPermission(isGranted: Boolean){
-        if(isGranted){
-            getLocation()
-        }else{
+    fun checkPermission(isGranted: Boolean){
+        if(!isGranted){
             val alertDialog = AlertDialog.Builder(requireContext())
             alertDialog.setTitle(getString(R.string.permission_dialog_title))
             alertDialog.setMessage(getString(R.string.permission_dialog_description))
@@ -71,39 +61,6 @@ open class BaseFragment<V: ViewBinding>(private val inflate: Inflate<V>) : Fragm
 
     fun hasPermissions(context: Context, permissions: Array<String> = PERMISSIONS): Boolean = permissions.all {
         ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun getLocation(){
-        val locationProvider = LocationProvider(requireContext())
-        val latitude = locationProvider.getLatitude()
-        val longitude = locationProvider.getLongitude()
-
-        val geocoder = Geocoder(requireContext(), Locale.getDefault())
-        val addresses = geocoder.getFromLocation(latitude,longitude,1)[0]
-        addresses.apply {
-            address = Address(
-                address = getAddressLine(0),
-                street = thoroughfare,
-                city = subAdminArea,
-                number = subThoroughfare,
-                state = adminArea,
-                country = countryName,
-                postalCode = postalCode,
-                knownName = featureName
-            )
-        }
-    }
-
-    fun setupToolbar(
-        title : String = "",
-        navigationBack : Boolean = true,
-        visibility : Boolean = true
-    ){
-        (requireActivity() as MainActivity).setupToolbar(
-            title = title,
-            navigationBack = navigationBack,
-            visibility = visibility
-        )
     }
 
     fun getToolbar() : Toolbar = (requireActivity() as MainActivity).getToolbar()

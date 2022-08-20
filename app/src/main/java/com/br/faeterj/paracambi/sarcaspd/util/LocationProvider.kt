@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Bundle
 import android.os.IBinder
 import androidx.core.app.ActivityCompat
 import java.lang.Exception
@@ -82,6 +83,16 @@ open class LocationProvider(
     }
 
     override fun onLocationChanged(location: Location) {}
+
+    override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+
+    override fun onProviderDisabled(provider: String) {
+        super.onProviderDisabled(provider)
+    }
+
+    override fun onProviderEnabled(provider: String) {
+        super.onProviderEnabled(provider)
+    }
 
 
     companion object{
