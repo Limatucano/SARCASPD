@@ -40,4 +40,7 @@
     <string name="loading_message">Carregando</string>
     <string name="icone_voltar">imagem de voltar</string>
 
+    <string name="permission_dialog_title">Permissão Obrigatória</string>
+    <string name="permission_dialog_description">Com essa permissão habilitada a aplicação pode capturar a localidade com mais precisão. Para isso vá em Permissões e habilite Localização.</string>
+    <string name="permission_dialog_positive_button">Permitir</string>
 </resources>

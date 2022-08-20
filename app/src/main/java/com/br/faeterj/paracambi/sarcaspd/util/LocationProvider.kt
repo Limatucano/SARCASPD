@@ -13,8 +13,7 @@ import androidx.core.app.ActivityCompat
 import java.lang.Exception
 
 open class LocationProvider(
-    private val context : Context,
-    private val locationChanged : (Location) -> Unit
+    private val context : Context
 ) : Service(), LocationListener {
 
     private lateinit var locationManager : LocationManager
@@ -82,9 +81,7 @@ open class LocationProvider(
         return null
     }
 
-    override fun onLocationChanged(location: Location) {
-        locationChanged.invoke(location)
-    }
+    override fun onLocationChanged(location: Location) {}
 
 
     companion object{
