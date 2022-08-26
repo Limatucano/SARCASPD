@@ -51,6 +51,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     }
 
 
+    //TODO: Passar a captura da localização para a viewModel
     private fun getLocation(): Address {
         val locationProvider = LocationProvider(requireContext())
         val latitude = locationProvider.getLatitude()
