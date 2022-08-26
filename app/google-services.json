@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "975703885811",
+    "project_id": "sarcaspd",
+    "storage_bucket": "sarcaspd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975703885811:android:930b9c7537982cdb74f486",
+        "android_client_info": {
+          "package_name": "com.br.faeterj.paracambi.sarcaspd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975703885811-qn34dso2kblpvcujjf241rahrfnvnbj5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoIp1dcDqRtG3M_u0FERM5DTjsJrWLI4U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975703885811-qn34dso2kblpvcujjf241rahrfnvnbj5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

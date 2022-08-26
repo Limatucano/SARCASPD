@@ -1,4 +1,4 @@
-package com.br.faeterj.paracambi.sarcaspd.viewModel
+package com.br.faeterj.paracambi.sarcaspd.view.form
 
 import android.view.View
 import android.widget.CheckBox
@@ -85,9 +85,6 @@ class FormViewModel @Inject constructor(
                 val points = fieldsRepository.calculateFields(rules, answersSelected)
                 result.postValue(fieldsRepository.getFinalResult(points))
             }
-
-
         }
     }
-
 }

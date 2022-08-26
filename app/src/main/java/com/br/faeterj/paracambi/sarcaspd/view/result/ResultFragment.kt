@@ -1,10 +1,11 @@
-package com.br.faeterj.paracambi.sarcaspd.view
+package com.br.faeterj.paracambi.sarcaspd.view.result
 
 import android.os.Bundle
 import android.view.View
 import com.br.faeterj.paracambi.sarcaspd.R
 import com.br.faeterj.paracambi.sarcaspd.data.model.FinalResult
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentResultBinding
+import com.br.faeterj.paracambi.sarcaspd.view.BaseFragment
 
 
 class ResultFragment : BaseFragment<FragmentResultBinding>(FragmentResultBinding::inflate) {

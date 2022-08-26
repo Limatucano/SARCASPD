@@ -1,4 +1,4 @@
-package com.br.faeterj.paracambi.sarcaspd.view
+package com.br.faeterj.paracambi.sarcaspd.view.form
 
 import android.os.Bundle
 import android.view.View
@@ -13,10 +13,10 @@ import com.br.faeterj.paracambi.sarcaspd.data.fields.CheckBoxField
 import com.br.faeterj.paracambi.sarcaspd.data.fields.SelectField
 import com.br.faeterj.paracambi.sarcaspd.data.model.*
 import com.br.faeterj.paracambi.sarcaspd.databinding.FragmentFormBinding
+import com.br.faeterj.paracambi.sarcaspd.view.BaseFragment
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.MultipleAnswerAdapter
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.OnClickCheckListener
 import com.br.faeterj.paracambi.sarcaspd.view.adapter.SpinnerAdapter
-import com.br.faeterj.paracambi.sarcaspd.viewModel.FormViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/formFragment"
-        android:name="com.br.faeterj.paracambi.sarcaspd.view.FormFragment"
+        android:name="com.br.faeterj.paracambi.sarcaspd.view.form.FormFragment"
         android:label="fragment_form"
         tools:layout="@layout/fragment_form" >
         <argument
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.br.faeterj.paracambi.sarcaspd.view.SplashFragment"
+        android:name="com.br.faeterj.paracambi.sarcaspd.view.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
-        android:name="com.br.faeterj.paracambi.sarcaspd.view.ResultFragment"
+        android:name="com.br.faeterj.paracambi.sarcaspd.view.result.ResultFragment"
         android:label="fragment_result"
         tools:layout="@layout/fragment_result" >
         <argument
