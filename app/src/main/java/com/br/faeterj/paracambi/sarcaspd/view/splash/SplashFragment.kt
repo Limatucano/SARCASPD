@@ -22,7 +22,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
     private val viewModel: FormViewModel by viewModels()
     private lateinit var requestMultiplePermissions: ActivityResultLauncher<Array<String>>
     private lateinit var geocoder: Geocoder
-    private lateinit var address: Address
+    //private lateinit var address: Address
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -30,7 +30,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
             visibility = false
         )
         geocoder = Geocoder(requireContext(), Locale.getDefault())
-        address = getLocation()
+        //address = getLocation()
         requestMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ permission ->
             permission.forEach { actionMap ->
                 when(actionMap.key){
@@ -52,25 +52,25 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
 
 
     //TODO: Passar a captura da localização para a viewModel
-    private fun getLocation(): Address {
-        val locationProvider = LocationProvider(requireContext())
-        val latitude = locationProvider.getLatitude()
-        val longitude = locationProvider.getLongitude()
-
-        val addresses = geocoder.getFromLocation(latitude,longitude,1)
-        addresses[0].apply {
-            return Address(
-                address = getAddressLine(0),
-                street = thoroughfare,
-                city = subAdminArea,
-                number = subThoroughfare,
-                state = adminArea,
-                country = countryName,
-                postalCode = postalCode,
-                knownName = featureName
-            )
-        }
-    }
+//    private fun getLocation(): Address {
+//        val locationProvider = LocationProvider(requireContext())
+//        val latitude = locationProvider.getLatitude()
+//        val longitude = locationProvider.getLongitude()
+//
+//        val addresses = geocoder.getFromLocation(latitude,longitude,1)
+//        addresses[0].apply {
+//            return Address(
+//                address = getAddressLine(0),
+//                street = thoroughfare,
+//                city = subAdminArea,
+//                number = subThoroughfare,
+//                state = adminArea,
+//                country = countryName,
+//                postalCode = postalCode,
+//                knownName = featureName
+//            )
+//        }
+//    }
 
     private fun setupObservers(){
         viewModel.error.observe(viewLifecycleOwner){
@@ -78,7 +78,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(FragmentSplashBinding
             binding.loadingMessage.text = it.message
         }
         viewModel.fields.observe(viewLifecycleOwner) {
-            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToFormFragment(it, address))
+            findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToFormFragment(it))
         }
     }
 

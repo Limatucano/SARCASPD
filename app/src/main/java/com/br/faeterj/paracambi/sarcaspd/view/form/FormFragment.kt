@@ -25,7 +25,6 @@ class FormFragment : BaseFragment<FragmentFormBinding>(FragmentFormBinding::infl
     private lateinit var direction: NavDirections
     private val viewModel: FormViewModel by viewModels()
     private lateinit var form: Form
-    private lateinit var address: Address
     private val fieldsCreated: MutableList<View> = mutableListOf()
     private val questions: MutableList<Question> = mutableListOf()
 
@@ -35,7 +34,6 @@ class FormFragment : BaseFragment<FragmentFormBinding>(FragmentFormBinding::infl
         val bundle = arguments ?: return
         val args = FormFragmentArgs.fromBundle(bundle)
         form = args.form
-        address = args.address
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,8 +43,6 @@ class FormFragment : BaseFragment<FragmentFormBinding>(FragmentFormBinding::infl
             title = getString(R.string.title_text),
             navigationBack = false
         )
-
-        binding.address.text = address.address
 
         form.blocks?.let { blocks ->
             scrollingList(blocks)
